@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>2-1. Figma MCP · 5분 (마케터 가치 중심)</title>
+<link rel="stylesheet" href="../../../../_design-system/colors_and_type.css" />
+<link rel="stylesheet" href="../../../../_design-system/deck.css?v=5" />
+<script src="../../../../_design-system/deck-stage.js"></script>
+<style>
+  .big-num { font-family:var(--font-display); font-weight:700; line-height:0.92; letter-spacing:-0.05em; }
+  deck-stage > section *, deck-stage > section *::before, deck-stage > section *::after { box-sizing: border-box; }
+  deck-stage > section [style*="grid"] > * { min-width: 0; min-height: 0; }
+  deck-stage > section div { max-width: 100%; }
+  deck-stage > section { overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+<!-- 01 COVER -->
+<section data-theme="dark" data-label="01 Cover">
+  <div class="grad"><div class="img" style="background-image:url('../../../../_design-system/assets/gradients/gradient-magenta.png');"></div><div class="fade"></div></div>
+
+  <div style="position:absolute; left:100px; top:120px; display:flex; align-items:center; gap:14px; font-family:var(--font-body); font-weight:500; font-size:24px; letter-spacing:0.04em; color:var(--paper-70);">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M12 0 L13.5 9 L24 12 L13.5 15 L12 24 L10.5 15 L0 12 L10.5 9 Z"/></svg>
+    <span>marketing-os · Part 2 / Clip 2-1 · 5분</span>
+  </div>
+
+  <div class="title-block cover" style="top:440px; font-size:140px;">디자이너를 옆에 둔다</div>
+
+  <div style="position:absolute; left:100px; top:864px; width:8px; height:8px; background:#5AE2A8; border-radius:50%;"></div>
+  <div style="position:absolute; left:130px; top:856px; font-family:var(--font-body); font-weight:400; font-size:28px; color:var(--paper-70);">Figma MCP · 외주 4시간이 10분으로</div>
+
+  <div class="strap"><span class="mark"></span><span class="slot a">marketing-os / Part 2 MCP</span><span class="slot b">한성국 · 2026</span><span class="page">01</span></div>
+</section>
+
+
+<!-- 02 Before/After -->
+<section data-theme="dark" data-label="02 Before After">
+  <div class="eyebrow" style="color:var(--paper-70);">왜 직접 만드냐</div>
+  <div class="title-block h1" style="top:140px; color:var(--paper);">외주 4시간 → 10분</div>
+
+  <!-- 좌측: 현재 3가지 옵션 -->
+  <div style="position:absolute; left:100px; top:380px; width:780px;">
+    <div style="font-family:var(--font-body); font-weight:500; font-size:16px; color:#5AE2A8; letter-spacing:0.14em; text-transform:uppercase;">로그인 페이지 1건 만들기 · 현재 옵션</div>
+    <div style="margin-top:24px; display:flex; flex-direction:column; gap:16px;">
+      <div style="padding:20px 24px; background:rgba(255,255,255,0.06); border-left:4px solid #FFB840;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between;">
+          <div style="font-family:var(--font-body); font-weight:600; font-size:20px; color:var(--paper);">① 디자이너 외주</div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:22px; color:#FFB840;">30~50만원</div>
+        </div>
+        <div style="margin-top:4px; font-family:var(--font-body); font-size:16px; color:rgba(255,255,255,0.65);">반나절~며칠 + 수정 요청마다 대기</div>
+      </div>
+      <div style="padding:20px 24px; background:rgba(255,255,255,0.06); border-left:4px solid #FFB840;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between;">
+          <div style="font-family:var(--font-body); font-weight:600; font-size:20px; color:var(--paper);">② 사내 디자이너</div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:22px; color:#FFB840;">2~3일</div>
+        </div>
+        <div style="margin-top:4px; font-family:var(--font-body); font-size:16px; color:rgba(255,255,255,0.65);">회의 → 의뢰 → 재수정 사이클</div>
+      </div>
+      <div style="padding:20px 24px; background:rgba(255,255,255,0.06); border-left:4px solid #FFB840;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between;">
+          <div style="font-family:var(--font-body); font-weight:600; font-size:20px; color:var(--paper);">③ 마케터 직접</div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:22px; color:#FFB840;">2~3시간</div>
+        </div>
+        <div style="margin-top:4px; font-family:var(--font-body); font-size:16px; color:rgba(255,255,255,0.65);">Figma·Photoshop 학습 + 직접 작업</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 우측: Before/After -->
+  <div style="position:absolute; left:980px; right:100px; top:380px;">
+
+    <div style="display:flex; align-items:center; gap:24px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(255,255,255,0.5); letter-spacing:0.14em; text-transform:uppercase; width:110px;">Before</div>
+      <div class="big-num" style="font-size:88px; color:rgba(255,255,255,0.55);">4h+</div>
+      <div style="margin-left:auto; font-family:var(--font-body); font-size:18px; color:rgba(255,255,255,0.55); line-height:1.4; text-align:right;">외주 또는 학습<br/>+ 비용 30~50만원</div>
+    </div>
+
+    <div style="margin-top:30px; padding:24px 28px; background:rgba(90,226,168,0.12); border-left:6px solid #5AE2A8;">
+      <div style="display:flex; align-items:center; gap:24px;">
+        <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:#5AE2A8; letter-spacing:0.14em; text-transform:uppercase; width:110px;">After</div>
+        <div class="big-num" style="font-size:88px; color:#5AE2A8;">10분</div>
+        <div style="margin-left:auto; font-family:var(--font-body); font-size:18px; color:var(--paper); line-height:1.4; text-align:right;">한 줄 명령으로<br/>Figma 직접 생성</div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px; padding:20px 24px; background:#5AE2A8; color:#000;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:rgba(0,0,0,0.6); letter-spacing:0.12em; text-transform:uppercase;">캠페인 운영 환산</div>
+      <div style="margin-top:6px; font-family:var(--font-display); font-weight:700; font-size:34px; color:#000; letter-spacing:-0.02em; line-height:1.1;">24배 단축 · 외주비 0원</div>
+      <div style="margin-top:8px; font-family:var(--font-body); font-size:15px; color:rgba(0,0,0,0.7);">+ 즉시 수정 ("색상 빨간색으로" 1초)</div>
+    </div>
+
+  </div>
+
+  <div class="strap"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">2-1 Before/After</span><span class="page">02</span></div>
+</section>
+
+
+<!-- 03 5 시나리오 -->
+<section data-theme="light" data-label="03 5 시나리오">
+  <div class="eyebrow">마케터가 직접 만드는 UI 5가지</div>
+  <div class="title-block h1" style="top:140px; color:#000;">로그인 · 배너 · 카드뉴스 · 가격표 · 모바일</div>
+
+  <div style="position:absolute; left:100px; top:380px; right:100px; display:grid; grid-template-columns:repeat(5, 1fr); gap:14px;">
+
+    <div style="padding:24px 20px; background:#5AE2A8; color:#000; min-height:300px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between;">
+        <div style="font-family:var(--font-display); font-weight:700; font-size:44px; color:#000; letter-spacing:-0.03em;">A ★</div>
+        <div style="font-family:var(--font-body); font-weight:500; font-size:12px; color:rgba(0,0,0,0.6); letter-spacing:0.1em; text-transform:uppercase;">로그인</div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:22px; color:#000; letter-spacing:-0.02em; line-height:1.2;">로그인·회원가입</div>
+      <div style="margin-top:auto; padding-top:14px; border-top:1px solid rgba(0,0,0,0.18); font-family:var(--font-body); font-size:14px; color:rgba(0,0,0,0.75); line-height:1.4;">"다크모드 + 소셜 3종"<br/><b>5~10분</b></div>
+    </div>
+
+    <div style="padding:24px 20px; background:#000; color:var(--paper); min-height:300px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between;">
+        <div style="font-family:var(--font-display); font-weight:700; font-size:44px; color:#5AE2A8; letter-spacing:-0.03em;">B</div>
+        <div style="font-family:var(--font-body); font-weight:500; font-size:12px; color:rgba(255,255,255,0.6); letter-spacing:0.1em; text-transform:uppercase;">배너</div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:22px; color:var(--paper); letter-spacing:-0.02em; line-height:1.2;">캠페인 배너</div>
+      <div style="margin-top:auto; padding-top:14px; border-top:1px solid rgba(255,255,255,0.15); font-family:var(--font-body); font-size:14px; color:rgba(255,255,255,0.75); line-height:1.4;">"봄 캠페인 핑크 톤"<br/><b>3~5분</b></div>
+    </div>
+
+    <div style="padding:24px 20px; background:#fff; color:#000; border:2px solid #FFB840; min-height:300px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between;">
+        <div style="font-family:var(--font-display); font-weight:700; font-size:44px; color:#FFB840; letter-spacing:-0.03em;">C ★</div>
+        <div style="font-family:var(--font-body); font-weight:500; font-size:12px; color:rgba(0,0,0,0.6); letter-spacing:0.1em; text-transform:uppercase;">SNS</div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:22px; color:#000; letter-spacing:-0.02em; line-height:1.2;">카드뉴스 5장</div>
+      <div style="margin-top:auto; padding-top:14px; border-top:1px solid rgba(0,0,0,0.12); font-family:var(--font-body); font-size:14px; color:rgba(0,0,0,0.7); line-height:1.4;">"인스타 1080×1080"<br/><b>10분</b></div>
+    </div>
+
+    <div style="padding:24px 20px; background:#fff; color:#000; border:2px solid #B388FF; min-height:300px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between;">
+        <div style="font-family:var(--font-display); font-weight:700; font-size:44px; color:#B388FF; letter-spacing:-0.03em;">D</div>
+        <div style="font-family:var(--font-body); font-weight:500; font-size:12px; color:rgba(0,0,0,0.6); letter-spacing:0.1em; text-transform:uppercase;">가격표</div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:22px; color:#000; letter-spacing:-0.02em; line-height:1.2;">3단 가격 비교</div>
+      <div style="margin-top:auto; padding-top:14px; border-top:1px solid rgba(0,0,0,0.12); font-family:var(--font-body); font-size:14px; color:rgba(0,0,0,0.7); line-height:1.4;">"Free / Pro / Enterprise"<br/><b>5~10분</b></div>
+    </div>
+
+    <div style="padding:24px 20px; background:#0A0A0A; color:var(--paper); border:2px solid #5AE2A8; min-height:300px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between;">
+        <div style="font-family:var(--font-display); font-weight:700; font-size:44px; color:#5AE2A8; letter-spacing:-0.03em;">E</div>
+        <div style="font-family:var(--font-body); font-weight:500; font-size:12px; color:rgba(255,255,255,0.7); letter-spacing:0.1em; text-transform:uppercase;">모바일</div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:22px; color:var(--paper); letter-spacing:-0.02em; line-height:1.2;">앱 온보딩 화면</div>
+      <div style="margin-top:auto; padding-top:14px; border-top:1px solid rgba(255,255,255,0.15); font-family:var(--font-body); font-size:14px; color:rgba(255,255,255,0.75); line-height:1.4;">"3-step 온보딩"<br/><b>10~15분</b></div>
+    </div>
+
+  </div>
+
+  <div style="position:absolute; left:100px; right:100px; top:840px; padding:22px 32px; background:#000; color:var(--paper); display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:#5AE2A8; letter-spacing:0.14em; text-transform:uppercase;">시작 순서</div>
+      <div style="margin-top:6px; font-family:var(--font-display); font-weight:700; font-size:26px; color:var(--paper); letter-spacing:-0.02em;">처음이면 A · B · 캠페인 발행은 C · D · E</div>
+    </div>
+    <div style="text-align:right; font-family:var(--font-body); font-size:15px; color:rgba(255,255,255,0.55); line-height:1.5;">기존 디자인 분석·변환도 가능<br/>(HTML/CSS 변환 30분 → 2분)</div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">2-1 5 시나리오</span><span class="page">03</span></div>
+</section>
+
+
+<!-- 04 작동 원리 -->
+<section data-theme="dark" data-label="04 작동 원리">
+  <div class="eyebrow" style="color:var(--paper-70);">작동 원리</div>
+  <div class="title-block h1" style="top:140px; color:var(--paper);">한 줄 → 다크모드 로그인 페이지</div>
+
+  <div style="position:absolute; left:100px; right:100px; top:380px; padding:36px 44px; background:rgba(255,255,255,0.06); border-left:8px solid #5AE2A8;">
+    <div style="font-family:var(--font-body); font-weight:500; font-size:15px; color:#5AE2A8; letter-spacing:0.14em; text-transform:uppercase;">입력은 단어 하나</div>
+    <div style="margin-top:10px; font-family:Menlo, monospace; font-size:64px; color:var(--paper); letter-spacing:-0.01em;">start</div>
+    <div style="margin-top:16px; font-family:var(--font-body); font-size:18px; color:rgba(255,255,255,0.7); line-height:1.5;">라우터 → figma 자동 분기 → 작업 5개 메뉴 → "1" 선택 → 카피 추출 + 톤 변형 결과<br/><b style="color:#5AE2A8;">총 30초~10분</b> · 본 강의 제공 라우터 (skills/start)</div>
+  </div>
+
+  <div style="position:absolute; left:100px; top:680px; right:100px; padding:28px 36px; background:#5AE2A8; color:#000;">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <div>
+        <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.6); letter-spacing:0.12em; text-transform:uppercase;">결과물 · Figma 페이지 자동 생성</div>
+        <div style="margin-top:6px; font-family:var(--font-display); font-weight:700; font-size:32px; color:#000; letter-spacing:-0.02em;">"다크모드 로그인" · 즉시 수정 가능</div>
+      </div>
+      <div style="font-family:var(--font-body); font-weight:500; font-size:16px; color:rgba(0,0,0,0.7); text-align:right; line-height:1.4;">Figma 파일에<br/>직접 생성</div>
+    </div>
+    <div style="margin-top:22px; padding-top:18px; border-top:1px solid rgba(0,0,0,0.18); display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;">
+      <div><div style="font-family:var(--font-body); font-size:13px; color:rgba(0,0,0,0.55); letter-spacing:0.08em;">요소 1</div><div style="margin-top:4px; font-family:var(--font-display); font-weight:700; font-size:24px; color:#000;">이메일·비밀번호</div></div>
+      <div><div style="font-family:var(--font-body); font-size:13px; color:rgba(0,0,0,0.55); letter-spacing:0.08em;">요소 2</div><div style="margin-top:4px; font-family:var(--font-display); font-weight:700; font-size:24px; color:#000;">로그인 버튼</div></div>
+      <div><div style="font-family:var(--font-body); font-size:13px; color:rgba(0,0,0,0.55); letter-spacing:0.08em;">요소 3</div><div style="margin-top:4px; font-family:var(--font-display); font-weight:700; font-size:24px; color:#000;">소셜 3종</div></div>
+      <div><div style="font-family:var(--font-body); font-size:13px; color:rgba(0,0,0,0.55); letter-spacing:0.08em;">요소 4</div><div style="margin-top:4px; font-family:var(--font-display); font-weight:700; font-size:24px; color:#000;">회원가입 링크</div></div>
+    </div>
+  </div>
+
+  <div class="strap"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">2-1 작동 원리</span><span class="page">04</span></div>
+</section>
+
+
+<!-- 05 마케터 가치 -->
+<section data-theme="light" data-label="05 마케터 가치">
+  <div class="eyebrow">왜 본인 업무에 중요한가</div>
+  <div class="title-block h1" style="top:140px; color:#000;">마케터에게 주는 가치 3가지</div>
+
+  <div style="position:absolute; left:100px; top:380px; right:100px; display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;">
+
+    <div style="padding:36px 30px; background:#5AE2A8; color:#000; min-height:340px; display:flex; flex-direction:column;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:rgba(0,0,0,0.6); letter-spacing:0.14em; text-transform:uppercase;">가치 1</div>
+      <div class="big-num" style="margin-top:14px; font-size:88px; color:#000;">외주비 0</div>
+      <div style="margin-top:auto; padding-top:20px; border-top:1px solid rgba(0,0,0,0.18); font-family:var(--font-body); font-size:19px; color:#000; line-height:1.55;"><b>월 100~200만원 절감</b><br/>1건당 30~50만원 외주비가 사라짐</div>
+    </div>
+
+    <div style="padding:36px 30px; background:#000; color:var(--paper); min-height:340px; display:flex; flex-direction:column;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:rgba(255,255,255,0.6); letter-spacing:0.14em; text-transform:uppercase;">가치 2</div>
+      <div class="big-num" style="margin-top:14px; font-size:88px; color:#FFB840;">즉시 수정</div>
+      <div style="margin-top:auto; padding-top:20px; border-top:1px solid rgba(255,255,255,0.18); font-family:var(--font-body); font-size:19px; color:var(--paper); line-height:1.55;"><b>"빨간색으로" 1초</b><br/>회의·재의뢰 사이클 없이 마케터 손에서 끝</div>
+    </div>
+
+    <div style="padding:36px 30px; background:#fff; color:#000; border:2px solid #B388FF; min-height:340px; display:flex; flex-direction:column;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:#B388FF; letter-spacing:0.14em; text-transform:uppercase;">가치 3</div>
+      <div class="big-num" style="margin-top:14px; font-size:88px; color:#B388FF;">디자인 자립</div>
+      <div style="margin-top:auto; padding-top:20px; border-top:1px solid rgba(0,0,0,0.12); font-family:var(--font-body); font-size:19px; color:#000; line-height:1.55;"><b>디자이너 의존도 0</b><br/>신입 마케터도 첫날부터 캠페인 비주얼 생산</div>
+    </div>
+
+  </div>
+
+  <div style="position:absolute; left:100px; right:100px; top:840px; padding:24px 32px; background:#000; color:var(--paper); display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:#5AE2A8; letter-spacing:0.14em; text-transform:uppercase;">본 클립 핵심 한 줄</div>
+      <div style="margin-top:6px; font-family:var(--font-display); font-weight:700; font-size:32px; color:var(--paper); letter-spacing:-0.02em;">디자이너를 옆에 둔 채로 마케터 혼자 일한다</div>
+    </div>
+    <div style="font-family:var(--font-display); font-weight:700; font-size:48px; color:#5AE2A8;">→</div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">2-1 마케터 가치</span><span class="page">05</span></div>
+</section>
+
+
+<!-- 06 Closing -->
+<section data-theme="dark" data-label="06 Closing">
+  <div class="grad"><div class="img" style="background-image:url('../../../../_design-system/assets/gradients/gradient-sunset.png');"></div><div class="fade"></div></div>
+
+  <div class="eyebrow" style="color:var(--paper-70);">이론 끝 · 시연 시작</div>
+
+  <div style="position:absolute; left:100px; right:100px; top:340px; font-family:var(--font-display); font-weight:700; font-size:130px; line-height:0.98; letter-spacing:-0.04em; color:var(--paper); text-align:left;">
+    이제 Figma<br/><span style="color:#5AE2A8;">실제 시연을 보겠습니다</span>
+  </div>
+
+  <div style="position:absolute; left:100px; right:100px; top:680px; font-family:var(--font-body); font-size:28px; line-height:1.5; color:var(--paper-70);">
+    여기까지가 Figma MCP 의 개념과 작동 원리입니다 · 지금부터 실제 시연 영상으로 작동 모습을 직접 확인합니다.
+  </div>
+
+  <div style="position:absolute; left:100px; right:200px; top:830px; padding:14px 20px; background:rgba(0,0,0,0.4); border-left:3px solid rgba(90,226,168,0.5); display:flex; align-items:center; gap:16px;">
+    <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:#5AE2A8; letter-spacing:0.14em; text-transform:uppercase; white-space:nowrap;">설치 안내</div>
+    <div style="font-family:var(--font-body); font-size:15px; color:var(--paper-70); line-height:1.4;">설치는 Part 2 마지막 영상 "MCP 전체 설치하자" 에서 12개 MCP 를 한 번에 진행합니다 · 지금은 개념만 잡으세요</div>
+  </div>
+
+  <div class="strap"><span class="mark"></span><span class="slot a">marketing-os / Part 2 MCP</span><span class="slot b">한성국 · 2026</span><span class="page">06</span></div>
+</section>
+
+</deck-stage>
+</body>
+</html>

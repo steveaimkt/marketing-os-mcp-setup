@@ -1,0 +1,40 @@
+# ════════════════════════════════════════════════
+# 환경 변수 · 인증 — 절대 커밋 금지
+# ════════════════════════════════════════════════
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# Google / Service Account 인증
+*credentials*.json
+!**/oauth_credentials.example.json
+token.json
+*.json.key
+service-account*.json
+**/credentials/
+
+# Claude / IDE 로컬 설정
+.claude/
+.vscode/settings.json
+.idea/
+
+# 산출물 (감사용 로컬 보관, 커밋 안 함)
+outputs/
+logs/
+
+# OS / 임시
+.DS_Store
+**/.DS_Store
+Thumbs.db
+*.tmp
+*.log
+tmp/
+
+# Node · Python
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/

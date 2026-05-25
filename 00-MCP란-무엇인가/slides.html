@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Part 2 · 1-1. MCP란 무엇인가 · AI에게 손발 달아주기</title>
+<link rel="stylesheet" href="../../_design-system/colors_and_type.css" />
+<link rel="stylesheet" href="../../_design-system/deck.css?v=5" />
+<script src="../../_design-system/deck-stage.js"></script>
+<style>
+  .big-num { font-family:var(--font-display); font-weight:700; line-height:0.92; letter-spacing:-0.05em; }
+  .accent-line { font-family:var(--font-display); font-weight:700; letter-spacing:-0.04em; line-height:0.96; }
+  .compare-row { display:flex; align-items:center; padding:18px 0; border-bottom:1px solid rgba(0,0,0,0.08); }
+  .compare-label { width:160px; font-family:var(--font-body); font-weight:500; font-size:18px; color:rgba(0,0,0,0.55); letter-spacing:0.04em; text-transform:uppercase; }
+  .compare-left, .compare-right { flex:1; font-family:var(--font-body); font-size:22px; }
+  .compare-left { color:rgba(0,0,0,0.55); }
+  .compare-right { color:#000; font-weight:500; }
+  .mcp-cell { padding:12px 16px; background:rgba(0,0,0,0.04); border-radius:10px; font-family:var(--font-body); font-size:17px; color:#000; }
+  .mcp-cell.dark { background:#000; color:#fff; }
+  .flow-step { padding:24px 22px; background:#000; color:#fff; border-radius:13px; }
+  .flow-step.light { background:rgba(0,0,0,0.04); color:#000; border:1px solid rgba(0,0,0,0.12); }
+  .flow-arrow { color:rgba(0,0,0,0.4); font-family:var(--font-display); font-weight:700; font-size:42px; display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+<!-- ============ 01 COVER ============ -->
+<section data-theme="dark" data-label="01 Cover">
+  <div class="grad"><div class="img" style="background-image:url('../../_design-system/assets/gradients/gradient-aqua.png');"></div><div class="fade"></div></div>
+  <div style="position:absolute; left:100px; top:120px; display:flex; align-items:center; gap:14px; font-family:var(--font-body); font-weight:500; font-size:24px; letter-spacing:0.04em; color:var(--paper-70);"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M12 0 L13.5 9 L24 12 L13.5 15 L12 24 L10.5 15 L0 12 L10.5 9 Z"/></svg><span>marketing-os · Part 2 / Clip 1-1</span></div>
+  <div class="title-block cover" style="top:440px; font-size:160px;">MCP란 무엇인가</div>
+  <div style="position:absolute; left:100px; top:880px; width:8px; height:8px; background:var(--paper); border-radius:50%;"></div>
+  <div style="position:absolute; left:130px; top:872px; font-family:var(--font-body); font-weight:400; font-size:28px; color:var(--paper-70);">AI에게 손발 달아주기 · Model Context Protocol</div>
+  <div class="strap"><span class="mark"></span><span class="slot a">marketing-os / Part 2 MCP</span><span class="slot b">한성국 · 2026</span><span class="page">01</span></div>
+</section>
+
+<!-- ============ 02 MANIFESTO ============ -->
+<section data-theme="light" data-label="02 Manifesto">
+  <div class="eyebrow">MCP 도입 신호</div>
+  <div style="position:absolute; left:0; right:0; top:240px; text-align:center; font-family:var(--font-display); font-weight:700; font-size:110px; line-height:1.05; color:#000; letter-spacing:-0.05em;">복사 <span style="color:rgba(0,0,0,0.25);">→</span> 챗봇 <span style="color:rgba(0,0,0,0.25);">→</span> 다시 옮기기</div>
+
+  <div style="position:absolute; left:0; right:0; top:480px; text-align:center; font-family:var(--font-body); font-weight:500; font-size:30px; color:rgba(0,0,0,0.55); letter-spacing:0.02em;">이 사이클이 한 주에 5번 이상 보이면 · MCP를 끼울 자리</div>
+
+  <!-- 3 examples -->
+  <div style="position:absolute; left:100px; top:640px; right:100px; display:flex; gap:32px;">
+    <div style="flex:1; padding:28px; background:rgba(0,0,0,0.04); border-radius:13px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.55); letter-spacing:0.12em; text-transform:uppercase;">CASE 01</div>
+      <div style="margin-top:14px; font-family:var(--font-body); font-weight:600; font-size:22px; color:#000; line-height:1.4;">Meta 광고 CSV<br/>다운로드 → 챗봇<br/>→ 노션에 다시 입력</div>
+    </div>
+    <div style="flex:1; padding:28px; background:rgba(0,0,0,0.04); border-radius:13px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.55); letter-spacing:0.12em; text-transform:uppercase;">CASE 02</div>
+      <div style="margin-top:14px; font-family:var(--font-body); font-weight:600; font-size:22px; color:#000; line-height:1.4;">GA4 리포트<br/>스크린샷 → 챗봇<br/>→ 시트에 다시 입력</div>
+    </div>
+    <div style="flex:1; padding:28px; background:rgba(0,0,0,0.04); border-radius:13px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.55); letter-spacing:0.12em; text-transform:uppercase;">CASE 03</div>
+      <div style="margin-top:14px; font-family:var(--font-body); font-weight:600; font-size:22px; color:#000; line-height:1.4;">경쟁사 사이트<br/>캡처 → 챗봇<br/>→ 디스코드 공유</div>
+    </div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">Clip 1-1 도입 신호</span><span class="page">02</span></div>
+</section>
+
+<!-- ============ 03 DEFINITION ============ -->
+<section data-theme="light" data-label="03 Definition">
+  <div class="eyebrow">MCP의 공식 정의</div>
+  <div class="title-block h2" style="top:160px; color:#000;">MCP = AI가 외부 도구와<br/>대화하는 공통 언어</div>
+
+  <!-- 정의 카드 -->
+  <div style="position:absolute; left:100px; top:520px; right:100px; padding:40px 48px; background:#000; color:var(--paper); border-radius:13px;">
+    <div style="display:flex; align-items:center; gap:18px;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:42px; letter-spacing:-0.03em;">Model Context Protocol</div>
+      <div style="padding:6px 14px; background:rgba(255,255,255,0.16); border-radius:999px; font-family:var(--font-body); font-weight:500; font-size:15px; letter-spacing:0.06em;">Anthropic · 2024.11 오픈 표준</div>
+    </div>
+    <div style="margin-top:22px; font-family:var(--font-body); font-size:24px; line-height:1.5; color:var(--paper-70);">AI 모델이 외부 시스템(SaaS · API · 로컬 도구)에 접근하는 방식을<br/>규격화한 통신 계층. 한 규격으로 모든 도구가 연결됨.</div>
+  </div>
+
+  <!-- USB 비유 -->
+  <div style="position:absolute; left:100px; top:820px; right:100px; display:flex; gap:32px; align-items:stretch;">
+    <div style="flex:1; padding:24px 28px; background:rgba(0,0,0,0.04); border-radius:13px; border-left:6px solid #5AE2A8;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.55); letter-spacing:0.12em; text-transform:uppercase;">한 줄 비유</div>
+      <div style="margin-top:10px; font-family:var(--font-body); font-weight:600; font-size:24px; color:#000;">USB-C가 모든 기기에 끼워지듯<br/>MCP는 모든 도구에 끼워진다</div>
+    </div>
+    <div style="flex:1; padding:24px 28px; background:rgba(0,0,0,0.04); border-radius:13px; border-left:6px solid #000;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.55); letter-spacing:0.12em; text-transform:uppercase;">암기 한 줄</div>
+      <div style="margin-top:10px; font-family:var(--font-body); font-weight:600; font-size:24px; color:#000;">MCP 서버 1개 =<br/>AI에게 손발 1쌍</div>
+    </div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">Clip 1-1 정의</span><span class="page">03</span></div>
+</section>
+
+<!-- ============ 04 COMPARE: Google Sheets 예시 ============ -->
+<section data-theme="light" data-label="04 Compare Sheets">
+  <div class="eyebrow">구체 예시 · Google Sheets</div>
+  <div class="title-block h2" style="top:160px; color:#000;">MCP 없이 vs MCP 있으면</div>
+  <div style="position:absolute; left:100px; top:380px; right:100px; font-family:var(--font-body); font-size:24px; color:rgba(0,0,0,0.55); line-height:1.4;">시나리오 · "이번 달 캠페인 시트 분석해서 채널별 ROAS 정리해줘"</div>
+
+  <div style="position:absolute; left:100px; top:480px; right:100px; display:flex; gap:48px;">
+    <!-- LEFT: MCP 없이 -->
+    <div style="flex:1; padding:36px 32px; background:rgba(0,0,0,0.04); border-radius:13px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:18px; color:rgba(0,0,0,0.55); letter-spacing:0.08em; text-transform:uppercase;">MCP 없이</div>
+      <div style="margin-top:12px; font-family:var(--font-display); font-weight:700; font-size:40px; color:rgba(0,0,0,0.7); letter-spacing:-0.02em; line-height:1.1;">매번 사람이<br/>옮겨야 함</div>
+      <ul style="margin-top:24px; padding-left:22px; font-family:var(--font-body); font-size:19px; color:rgba(0,0,0,0.7); line-height:1.7;">
+        <li>시트 열어서 셀 범위 복사</li>
+        <li>챗봇에 붙여넣고 "분석해줘"</li>
+        <li>받은 결과를 다시 시트에 입력</li>
+        <li>매주 반복 · 한 번에 30분 소요</li>
+      </ul>
+      <div style="margin-top:24px; padding:14px 18px; background:rgba(0,0,0,0.08); border-radius:8px; font-family:var(--font-body); font-weight:500; font-size:18px; color:#000;">결과 · 마케팅 인사이트 ✕<br/>단순 복붙 노동 ✓</div>
+    </div>
+
+    <!-- RIGHT: MCP 있으면 -->
+    <div style="flex:1; padding:36px 32px; background:#000; color:var(--paper); border-radius:13px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:18px; color:var(--paper-70); letter-spacing:0.08em; text-transform:uppercase;">MCP 있으면</div>
+      <div style="margin-top:12px; font-family:var(--font-display); font-weight:700; font-size:40px; color:var(--paper); letter-spacing:-0.02em; line-height:1.1;">AI가 시트를<br/>직접 읽고 씀</div>
+      <ul style="margin-top:24px; padding-left:22px; font-family:var(--font-body); font-size:19px; color:var(--paper-70); line-height:1.7;">
+        <li>Google Sheets MCP 1줄 설치</li>
+        <li>AI 가 시트 직접 조회 · 계산</li>
+        <li>결과를 새 탭에 자동 정리</li>
+        <li>"이번 달 시트 분석해줘" 한 줄</li>
+      </ul>
+      <div style="margin-top:24px; padding:14px 18px; background:rgba(255,255,255,0.12); border-radius:8px; font-family:var(--font-body); font-weight:500; font-size:18px; color:var(--paper);">결과 · 마케팅 인사이트 ✓<br/>30분 → 30초</div>
+    </div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">Clip 1-1 Sheets 예시</span><span class="page">04</span></div>
+</section>
+
+<!-- ============ 05 12 손발 카탈로그 ============ -->
+<section data-theme="light" data-label="05 Catalog">
+  <div class="eyebrow">12개 손발 카탈로그</div>
+  <div class="title-block h2" style="top:160px; color:#000;">눈 6개 + 손 4개 + 발 2개</div>
+
+  <div style="position:absolute; left:100px; top:400px; right:100px; display:grid; grid-template-columns:1.2fr 1fr 0.8fr; gap:40px;">
+
+    <!-- 눈 -->
+    <div>
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <div class="big-num" style="font-size:88px; color:#000;">6</div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:36px; color:#000; letter-spacing:-0.02em;">눈</div>
+          <div style="font-family:var(--font-body); font-weight:500; font-size:16px; color:rgba(0,0,0,0.55); letter-spacing:0.08em; text-transform:uppercase;">읽는 능력</div>
+        </div>
+      </div>
+      <div style="margin-top:24px; display:grid; gap:10px;">
+        <div class="mcp-cell">Google Sheets · 시트 조회</div>
+        <div class="mcp-cell">GA4 · 트래픽 데이터</div>
+        <div class="mcp-cell">Firecrawl · 경쟁사 스크랩</div>
+        <div class="mcp-cell">YouTube Data · 채널 분석</div>
+        <div class="mcp-cell">Notion · 캘린더 조회</div>
+        <div class="mcp-cell">Meta · Google Ads · 광고 성과</div>
+      </div>
+    </div>
+
+    <!-- 손 -->
+    <div>
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <div class="big-num" style="font-size:88px; color:#000;">4</div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:36px; color:#000; letter-spacing:-0.02em;">손</div>
+          <div style="font-family:var(--font-body); font-weight:500; font-size:16px; color:rgba(0,0,0,0.55); letter-spacing:0.08em; text-transform:uppercase;">조작 능력</div>
+        </div>
+      </div>
+      <div style="margin-top:24px; display:grid; gap:10px;">
+        <div class="mcp-cell dark">Figma · 디자인 시안 작성</div>
+        <div class="mcp-cell dark">Higgsfield · 이미지 · 영상 생성</div>
+        <div class="mcp-cell dark">영상제작 트리오 · Hyperframes 외</div>
+        <div class="mcp-cell dark">Buffer · SNS 다채널 예약</div>
+      </div>
+    </div>
+
+    <!-- 발 -->
+    <div>
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <div class="big-num" style="font-size:88px; color:#000;">2</div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:36px; color:#000; letter-spacing:-0.02em;">발</div>
+          <div style="font-family:var(--font-body); font-weight:500; font-size:16px; color:rgba(0,0,0,0.55); letter-spacing:0.08em; text-transform:uppercase;">발송 능력</div>
+        </div>
+      </div>
+      <div style="margin-top:24px; display:grid; gap:10px;">
+        <div class="mcp-cell" style="background:#5AE2A8; color:#000;">Discord · 알림 · 승인 봇</div>
+        <div class="mcp-cell" style="background:#5AE2A8; color:#000;">Gmail · 자동 메일 발송</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="position:absolute; left:100px; top:910px; right:100px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(0,0,0,0.14); padding-top:14px;">
+    <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.55); letter-spacing:0.08em; text-transform:uppercase;">암기 한 줄</div>
+    <div style="font-family:var(--font-display); font-weight:700; font-size:22px; color:#000; letter-spacing:-0.02em;">새 도구 배움 ✕ · 기존 도구에 AI 연결만 ✓</div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">Clip 1-1 카탈로그</span><span class="page">05</span></div>
+</section>
+
+<!-- ============ 06 DIAGRAM 4단계 ============ -->
+<section data-theme="light" data-label="06 Flow Diagram">
+  <div class="eyebrow">MCP 작동 원리</div>
+  <div class="title-block h2" style="top:160px; color:#000;">사용자 1줄 → 자동 4단계</div>
+
+  <div style="position:absolute; left:100px; top:380px; right:100px;">
+    <div style="padding:18px 24px; background:#000; color:var(--paper); border-radius:13px; font-family:var(--font-body); font-size:22px;">
+      <span style="opacity:0.6; font-size:14px; letter-spacing:0.1em; text-transform:uppercase;">사용자 입력</span><br/>
+      <span style="font-weight:600;">"이번 주 광고 성과 시트에 정리해줘"</span>
+    </div>
+  </div>
+
+  <div style="position:absolute; left:100px; top:520px; right:100px; display:grid; grid-template-columns:repeat(4, 1fr); gap:18px;">
+    <div class="flow-step light">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:rgba(0,0,0,0.55); letter-spacing:0.14em;">STEP 01</div>
+      <div style="margin-top:8px; font-family:var(--font-display); font-weight:700; font-size:28px; color:#000; letter-spacing:-0.02em;">Claude Code<br/>해석</div>
+      <div style="margin-top:14px; font-family:var(--font-body); font-size:16px; color:rgba(0,0,0,0.7); line-height:1.5;">자연어를 의도로 변환 · 필요한 손발 판단</div>
+    </div>
+    <div class="flow-step light">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:rgba(0,0,0,0.55); letter-spacing:0.14em;">STEP 02</div>
+      <div style="margin-top:8px; font-family:var(--font-display); font-weight:700; font-size:28px; color:#000; letter-spacing:-0.02em;">.mcp.json<br/>확인</div>
+      <div style="margin-top:14px; font-family:var(--font-body); font-size:16px; color:rgba(0,0,0,0.7); line-height:1.5;">프로젝트의 MCP 서버 목록 로드</div>
+    </div>
+    <div class="flow-step">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:rgba(255,255,255,0.6); letter-spacing:0.14em;">STEP 03</div>
+      <div style="margin-top:8px; font-family:var(--font-display); font-weight:700; font-size:28px; color:#fff; letter-spacing:-0.02em;">MCP 서버<br/>호출</div>
+      <div style="margin-top:14px; font-family:var(--font-body); font-size:16px; color:rgba(255,255,255,0.7); line-height:1.5;">Meta Ads + Google Sheets · 각자 API 호출</div>
+    </div>
+    <div class="flow-step light">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:13px; color:rgba(0,0,0,0.55); letter-spacing:0.14em;">STEP 04</div>
+      <div style="margin-top:8px; font-family:var(--font-display); font-weight:700; font-size:28px; color:#000; letter-spacing:-0.02em;">결과<br/>응답</div>
+      <div style="margin-top:14px; font-family:var(--font-body); font-size:16px; color:rgba(0,0,0,0.7); line-height:1.5;">"weekly-ads 시트에 7행 추가됨"</div>
+    </div>
+  </div>
+
+  <div style="position:absolute; left:100px; top:840px; right:100px; padding:24px 32px; background:#5AE2A8; color:#000; border-radius:13px; display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-family:var(--font-body); font-weight:500; font-size:14px; color:rgba(0,0,0,0.55); letter-spacing:0.12em; text-transform:uppercase;">시간 비교</div>
+      <div style="margin-top:6px; font-family:var(--font-display); font-weight:700; font-size:36px; color:#000; letter-spacing:-0.02em;">30분 → 30초</div>
+    </div>
+    <div style="font-family:var(--font-body); font-weight:500; font-size:22px; color:#000;">사용자는 1줄만 입력 · 나머지는 모두 자동</div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">Clip 1-1 작동 원리</span><span class="page">06</span></div>
+</section>
+
+<!-- ============ 07 FAQ 3 ============ -->
+<section data-theme="light" data-label="07 FAQ">
+  <div class="eyebrow">자주 묻는 오해</div>
+  <div class="title-block h2" style="top:160px; color:#000;">MCP에 대한 3가지 오해</div>
+
+  <div style="position:absolute; left:100px; top:400px; right:100px; display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
+
+    <!-- Q1 -->
+    <div style="padding:32px 30px; background:rgba(0,0,0,0.04); border-radius:13px; border-top:6px solid #000;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:48px; color:#000; letter-spacing:-0.03em;">Q1</div>
+      <div style="margin-top:16px; font-family:var(--font-body); font-weight:600; font-size:22px; color:#000; line-height:1.4;">MCP는 챗봇 도구 사용(Tool Use)과 같은 것?</div>
+      <div style="margin-top:20px; padding-top:18px; border-top:1px solid rgba(0,0,0,0.14); font-family:var(--font-body); font-size:17px; color:rgba(0,0,0,0.7); line-height:1.6;">
+        <b style="color:#000;">아니오 · 층이 다름.</b><br/>
+        Tool Use는 AI가 도구를 "어떻게 호출하는가". MCP는 그 도구가 "어디에 어떤 모양으로 정의되어 있는가". 한 세트로 쓰임.
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div style="padding:32px 30px; background:rgba(0,0,0,0.04); border-radius:13px; border-top:6px solid #000;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:48px; color:#000; letter-spacing:-0.03em;">Q2</div>
+      <div style="margin-top:16px; font-family:var(--font-body); font-weight:600; font-size:22px; color:#000; line-height:1.4;">그냥 API를 직접 호출하면 안 되나?</div>
+      <div style="margin-top:20px; padding-top:18px; border-top:1px solid rgba(0,0,0,0.14); font-family:var(--font-body); font-size:17px; color:rgba(0,0,0,0.7); line-height:1.6;">
+        <b style="color:#000;">가능 · 다만 비효율.</b><br/>
+        API마다 스키마 · 인증 · 에러 처리를 직접 코딩해야 함. MCP는 "한 번 설치 = 평생 재사용" 규격으로 표준화.
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div style="padding:32px 30px; background:rgba(0,0,0,0.04); border-radius:13px; border-top:6px solid #5AE2A8;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:48px; color:#000; letter-spacing:-0.03em;">Q3</div>
+      <div style="margin-top:16px; font-family:var(--font-body); font-weight:600; font-size:22px; color:#000; line-height:1.4;">MCP 서버는 누가 만드나? 안전한가?</div>
+      <div style="margin-top:20px; padding-top:18px; border-top:1px solid rgba(0,0,0,0.14); font-family:var(--font-body); font-size:17px; color:rgba(0,0,0,0.7); line-height:1.6;">
+        <b style="color:#000;">서비스 회사 · Anthropic · 커뮤니티.</b><br/>
+        본 강의는 공식 · 검수된 것만 사용. 정체 불명 서버는 절대 사용 ✕ (프롬프트 주입 위험).
+      </div>
+    </div>
+
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">Clip 1-1 오해</span><span class="page">07</span></div>
+</section>
+
+<!-- ============ 08 강의 진행 방식 + 통합 설치 ============ -->
+<section data-theme="light" data-label="08 Course Flow + Install">
+  <div class="eyebrow">이 강의 진행 방식</div>
+  <div class="title-block h2" style="top:140px; color:#000;">12개 MCP 영상 → 설치 1편<br/>한 번에 끝낸다</div>
+
+  <!-- 진행 흐름 2단계 -->
+  <div style="position:absolute; left:100px; top:380px; right:100px; display:flex; gap:36px; align-items:stretch;">
+
+    <!-- Step 1 · 이론 영상 -->
+    <div style="flex:1; padding:40px 40px; background:rgba(0,0,0,0.04); border-radius:13px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:16px; color:rgba(0,0,0,0.55); letter-spacing:0.1em; text-transform:uppercase;">STEP 1 · 지금부터</div>
+      <div style="margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:54px; color:#000; letter-spacing:-0.02em; line-height:1.05;">12개 MCP<br/>영상 먼저 쭉 보기</div>
+      <div style="margin-top:24px; font-family:var(--font-body); font-size:20px; color:#000; line-height:1.55;">12개 MCP 를 5분짜리 이론 클립으로 시청.<br/>각 MCP 의 의미·결과물·마케터 가치 + 시연 1분.</div>
+      <div style="margin-top:20px; padding:14px 18px; background:rgba(0,0,0,0.08); border-radius:8px; font-family:var(--font-body); font-weight:600; font-size:18px; color:#000;">설치 · 키 발급 모두 ✕ · 화면만 보고 학습</div>
+    </div>
+
+    <!-- 화살표 -->
+    <div style="display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:64px; color:rgba(0,0,0,0.35);">→</div>
+
+    <!-- Step 2 · 설치 마라톤 -->
+    <div style="flex:1; padding:40px 40px; background:#000; color:var(--paper); border-radius:13px;">
+      <div style="font-family:var(--font-body); font-weight:500; font-size:16px; color:#5AE2A8; letter-spacing:0.1em; text-transform:uppercase;">STEP 2 · 마지막 클립</div>
+      <div style="margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:54px; color:var(--paper); letter-spacing:-0.02em; line-height:1.05;">설치 마라톤<br/>30~40분</div>
+      <div style="margin-top:24px; font-family:Menlo, monospace; font-size:22px; color:#5AE2A8;">"MCP 전체 설치하자"</div>
+      <div style="margin-top:10px; font-family:var(--font-body); font-size:20px; color:var(--paper-70); line-height:1.55;">12개 MCP 키 발급 안내부터 설치·검증까지<br/>한 번에 자동 진행. 본인은 키 붙여넣기만.</div>
+    </div>
+
+  </div>
+
+  <!-- 하단 핵심 메시지 -->
+  <div style="position:absolute; left:100px; right:100px; top:820px; padding:24px 32px; background:#5AE2A8; color:#000; border-radius:13px; display:flex; align-items:center; gap:24px;">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:36px; color:#000; letter-spacing:-0.02em;">왜 설치를 뒤로?</div>
+    <div style="flex:1; font-family:var(--font-body); font-size:20px; color:#000; line-height:1.5;">
+      12개를 다 보시면 "이거 다 쓰고 싶다" 싶어집니다. 그때 한 번에 설치하면 동기 부여 + 시간 효율 둘 다 잡혀요. 매 클립마다 키 발급 5분이 끼어들면 흐름이 끊깁니다.
+    </div>
+  </div>
+
+  <div class="strap" style="color:#000;"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="slot c">Clip 1-1 진행 방식</span><span class="page">08</span></div>
+</section>
+
+<!-- ============ 09 CLOSING ============ -->
+<section data-theme="dark" data-label="09 Closing">
+  <div class="grad"><div class="img" style="background-image:url('../../_design-system/assets/gradients/gradient-sunset.png');"></div><div class="fade"></div></div>
+  <div class="eyebrow" style="color:var(--paper-70);">다음 클립: 1-2</div>
+  <div class="title-block hero" style="top:340px;">Google Sheets MCP<br/>스프레드시트 업무 자동화</div>
+  <div style="position:absolute; left:100px; top:760px; font-family:var(--font-body); font-size:32px; line-height:1.4; color:var(--paper-70); max-width:1300px;">개념은 끝. 이제 손을 답니다.<br/>매주 30분 시트 정리가 30초로 줄어드는 첫 경험.</div>
+  <div class="strap"><span class="mark"></span><span class="slot a">marketing-os / Part 2</span><span class="slot b">한성국 · 2026</span><span class="page">09</span></div>
+</section>
+
+</deck-stage>
+</body>
+</html>
