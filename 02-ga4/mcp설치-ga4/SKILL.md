@@ -150,12 +150,12 @@ Expand-Archive "$env:Temp\gcloud.zip" -DestinationPath $env:UserProfile
 
 ### 2.2 ADC 발급 (사용자 1회 OAuth · 1분)
 
-⚠️ **반드시 본인 OAuth credentials 사용**. Google 기본 client ID 는 wmbb.kr 같은 Google Workspace 조직에 차단됨 (`차단된 앱` 오류).
+⚠️ **반드시 본인 OAuth credentials 사용**. Google 기본 client ID 는 wmbb.kr 같은 Workspace 조직 + `analytics.readonly` 스코프 차단에 걸림 (`차단된 앱` 오류). 2026-05 검증상 **데스크톱 앱 유형 자체 클라이언트**가 확실 (발급 절차는 아래 트러블슈팅 "⚠️ 실전 검증 · 벽 1" 참고). Sheets MCP 의 `oauth_credentials.json` 재활용도 가능하나, 그 클라이언트에 analytics 스코프 동의가 없으면 실패하므로 신규 발급 권장.
 
 ```bash
-# marketing-os/mcp-server/oauth_credentials.json (Sheets MCP 설치 시 발급된 것 재활용)
+# ① 권장: 신규 데스크톱 클라이언트  ② 대안: Sheets MCP 발급분 재활용
 ~/google-cloud-sdk/bin/gcloud auth application-default login \
-  --client-id-file="${CLAUDE_PROJECT_DIR}/mcp-server/oauth_credentials.json" \
+  --client-id-file="$HOME/.config/gcloud/ga4_oauth_client.json" \
   --scopes=https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/cloud-platform
 
 # → 브라우저 자동 열림 (localhost:8085 콜백)
@@ -201,10 +201,12 @@ echo "GA_PROPERTY_ID=471063826" >> .env  # ⚠️ 9자리 숫자만 (GA4_ 아닌
   "args": ["-y", "mcp-server-ga4"],
   "env": {
     "GOOGLE_APPLICATION_CREDENTIALS": "${HOME}/.config/gcloud/application_default_credentials.json",
-    "GA_PROPERTY_ID": "${GA_PROPERTY_ID}"
+    "GA_PROPERTY_ID": "427641480"
   }
 }
 ```
+
+> ⚠️ **속성 ID 는 평문 고정 권장.** `"${GA4_PROPERTY_ID}"` 처럼 `.env` 참조로 두면, claude 를 **marketing-os 루트가 아닌 서브폴더에서 실행**할 때 `.env` 가 안 읽혀 `Invalid property ID: ${GA4_PROPERTY_ID}` 에러가 난다 (`${HOME}` 같은 시스템 변수만 치환됨). 속성 ID 는 비밀값이 아니므로 직접 박는 게 안전. 다른 속성으로 바꾸려면 이 값 교체 후 재시작.
 
 ### 2.4 헬스 체크 (자동 30초)
 
@@ -335,15 +337,30 @@ claude mcp list | grep ga4
 
 | 증상 | 원인 | 해결 |
 |---|---|---|
-| `차단된 앱` (브라우저 OAuth 화면) | Google 기본 client ID 가 Workspace 조직 정책에 차단 | `--client-id-file=` 옵션으로 본인 OAuth credentials 사용 (Sheets MCP 발급분 재활용) |
+| `차단된 앱` (브라우저 OAuth 화면) | Google 기본 client ID 가 Workspace 조직 정책 + `analytics.readonly` 스코프 차단에 걸림 | **자체 OAuth 데스크톱 클라이언트** 발급 후 `--client-id-file=` 로 ADC 재로그인 (아래 ⚠️ 실전 참고) |
+| `invalid_grant / invalid_rapt` (MCP 호출) | ① ADC 스코프 부족(analytics 누락) ② 또는 MCP 서버가 옛 토큰 캐싱 | 스코프 명시해 재로그인 + **Claude Code 재시작** (직접 curl 은 되는데 MCP 만 실패하면 캐싱) |
+| `ACCESS_TOKEN_SCOPE_INSUFFICIENT (403)` | ADC 에 `analytics.readonly` 스코프 없음 | 로그인 시 `--scopes=https://www.googleapis.com/auth/analytics.readonly,...` 명시 |
+| `Invalid property ID: ${GA4_PROPERTY_ID}` | `.mcp.json` 의 `${...}` 가 치환 안 됨 — claude 를 **서브폴더에서 실행**(루트 .env 미로드) | (A) marketing-os 루트에서 `claude` 실행 또는 (B) `.mcp.json` 에 속성 ID 평문 고정 (`"GA_PROPERTY_ID":"427641480"`) |
 | `PERMISSION_DENIED` | 본인 Google 계정이 GA4 속성에 접근 권한 없음 | analytics.google.com > 관리 > 속성 액세스에 본인 이메일 권한 확인 |
-| `GA_PROPERTY_ID is not set` | 환경변수 이름 오타 (`GA_PROPERTY_ID` 잘못) | `.env` + `.mcp.json` 의 변수명을 **`GA_PROPERTY_ID`** 로 (GA4_ 아님) |
+| `GA_PROPERTY_ID is not set` | 환경변수 이름 오타 (`GA_PROPERTY_ID` 잘못) | `.mcp.json` env 키는 **`GA_PROPERTY_ID`** (GA4_ 아님). 값은 평문 또는 `${GA4_PROPERTY_ID}` |
 | `INVALID_ARGUMENT` property ID | `properties/` 접두사 중복 | 9자리 숫자만 (MCP 자동 prefix) |
 | `404 Not Found: API` | Analytics Data API 미활성화 | console.cloud.google.com > APIs & Services > Library > "Google Analytics Data API" 사용 설정 |
 | `mcp__ga4__*` 도구 안 보임 | `.mcp.json` 문법 오류 또는 재시작 안 함 | `python3 -c "import json; json.load(open('.mcp.json'))"` 검증 + Claude Code 완전 종료 후 재시작 |
-| 응답이 비어 있음 (행 0개) | 데이터 범위에 트래픽 없음 | 기간을 `last_90_days` 로 늘려 재시도 + 속성 ID 재확인 |
+| 응답이 비어 있음 (행 0개) | 데이터 범위에 트래픽 없음 | 기간을 `last_90_days` 로 늘려 재시도 + 속성 ID 재확인 (속성마다 수집 기간 다름) |
 | ADC 파일 없음 | gcloud auth 미실행 | STEP 2.2 명령 재실행 |
-| ADC 만료 (`reauth required`) | 토큰 갱신 필요 | `gcloud auth application-default login --client-id-file=...` 재실행 |
+| ADC 만료 (`reauth required`) | 토큰 갱신 필요 | `gcloud auth application-default login --client-id-file=...` 재실행 + Claude Code 재시작 |
+
+### ⚠️ 실전 검증 (2026-05-25, wmbb.kr) — 2개의 벽
+
+**벽 1 · gcloud 기본 클라이언트의 GA4 스코프 차단**: 기본 client ID 는 이제 `analytics.readonly` 를 차단(브라우저 "액세스 차단"). Service Account 키도 wmbb.kr 정책상 막힘 → **자체 OAuth 데스크톱 클라이언트** 발급이 유일한 길:
+1. GCP 콘솔 → `analyticsdata.googleapis.com` **사용 설정**
+2. OAuth 동의 화면(대상=Internal 권장) → **OAuth 클라이언트 ID → 데스크톱 앱** → JSON 다운로드 → `~/.config/gcloud/ga4_oauth_client.json`
+3. `gcloud auth application-default login --client-id-file="$HOME/.config/gcloud/ga4_oauth_client.json" --scopes="https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/cloud-platform"`
+4. 검증: `TOKEN=$(gcloud auth application-default print-access-token)` 로 `analyticsdata.googleapis.com/.../runReport` 직접 curl → KRW/Asia-Seoul 응답이면 성공.
+
+**벽 2 · `${GA4_PROPERTY_ID}` 미치환**: 서브폴더에서 claude 실행 시 루트 `.env` 가 안 읽혀 변수가 문자 그대로 전달됨(`${HOME}`·`${PWD}` 시스템 변수만 치환). → 루트 실행하거나, **비밀값 아닌 속성 ID 는 `.mcp.json` 에 평문 고정** 권장.
+
+**공통 · MCP 서버 토큰 캐싱**: ADC/`.mcp.json` 갱신 후에도 떠 있는 서버는 옛 값 사용 → **반드시 Claude Code 재시작**.
 
 ## 📝 강의 실습 (실습.md 통합)
 
@@ -401,10 +418,11 @@ claude mcp list | grep ga4
 | MCP 패키지 | `mcp-server-ga4` (npm v1.0.2 · okamoto53515606) |
 | Google API | Google Analytics Data API v1 |
 | 인증 방식 | ADC · `gcloud auth application-default login` |
-| 자체 OAuth client | `mcp-server/oauth_credentials.json` (Sheets MCP 발급분 재활용) |
+| 자체 OAuth client | `~/.config/gcloud/ga4_oauth_client.json` (GCP 콘솔 데스크톱 앱 신규 발급 · 권장) |
+| ADC 스코프 | `analytics.readonly` + `cloud-platform` (로그인 시 명시 필수) |
 | ADC 파일 위치 | `~/.config/gcloud/application_default_credentials.json` |
-| 환경 변수 (1개) | `GA_PROPERTY_ID` (GA4_ 아닌 GA_) |
-| 속성 ID 형식 | 숫자 9자리 |
+| `.mcp.json` env 키 | `GA_PROPERTY_ID` (GA4_ 아님) · 값은 **평문 고정 권장** (서브폴더 실행 시 ${} 미치환) |
+| 속성 ID 형식 | 숫자 9자리 (검증 계정 WMBB 메일리 = `427641480`) |
 | 노출 도구 | 5개 (`run_report`, `batch_run_reports`, `get_realtime_data`, `list_metrics`, `list_dimensions`) |
 | 자주 쓰는 차원 | `sessionDefaultChannelGroup` · `landingPagePlusQueryString` · `newVsReturning` · `sessionSource` · `sessionMedium` |
 | 자주 쓰는 지표 | `sessions` · `conversions` · `conversionRate` · `totalRevenue` · `bounceRate` · `averageSessionDuration` · `activeUsers` |

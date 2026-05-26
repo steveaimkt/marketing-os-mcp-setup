@@ -127,7 +127,7 @@ description: |
 
 ## ⚙️ STEP 2: MCP 설치 · 6단계
 
-### 2.1 STEP 1 / 6 · GCP 프로젝트 + YouTube Data API v3 활성화 (사용자 직접 · 2분)
+### 2.1 STEP 1 / 6 · GCP 프로젝트 + YouTube 관련 API 2개 활성화 (사용자 직접 · 3분)
 
 사용자에게 안내:
 
@@ -139,12 +139,27 @@ description: |
    ⚠ GA4 클립에서 만든 프로젝트 그대로 재사용 가능
    ⚠ 없으면 "새 프로젝트" 클릭 → 이름 입력 → 만들기
 ③ 좌측 메뉴 ☰ → APIs & Services → Library
+
+[필수] YouTube Data API v3 활성화
 ④ 검색창에 "YouTube Data API v3" 입력
 ⑤ 검색 결과의 첫 항목 클릭 → "Enable" 버튼 클릭
 ⑥ 활성화 완료 화면 확인 (Manage 버튼이 나타남)
+
+[권장] YouTube Analytics API 활성화 (본인 채널 구독 변동·시청자 분석용)
+⑦ 좌측 메뉴 ☰ → APIs & Services → Library 로 다시 이동
+⑧ 검색창에 "YouTube Analytics API" 입력
+⑨ 검색 결과 첫 항목 클릭 → "Enable" 버튼 클릭
+⑩ 활성화 완료 확인
 ```
 
-⚠️ "YouTube Data API v3" 와 "YouTube Analytics API" 는 다른 API. **반드시 Data API v3** 활성화. Analytics API 는 본인 채널 수익·시청자 인구통계 데이터용 (별도 OAuth).
+**두 API 의 차이** :
+
+| API | 인증 | 데이터 | 본 STEP 에서 |
+|---|---|---|---|
+| **YouTube Data API v3** | API Key (이 스킬 STEP 2 에서 발급) | 공개 데이터 (조회수·댓글·검색) | 필수 활성화 |
+| **YouTube Analytics API** | OAuth refresh_token (별도 셋업) | 본인 채널 (구독 변동·트래픽·인구통계) | 활성화만 미리. OAuth 셋업은 별도 |
+
+→ Analytics API 의 OAuth 셋업은 [`../analytics-api-oauth.md`](../analytics-api-oauth.md) Phase 2 (약 15분) 에서 진행. 본 스킬은 Phase 1 (Data API v3 + API Key) 만 끝까지 다룸.
 
 ### 2.2 STEP 2 / 6 · API Key 발급 (사용자 직접 · 1분) ★ 핵심
 

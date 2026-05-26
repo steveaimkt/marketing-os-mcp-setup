@@ -1,307 +1,307 @@
 ---
 name: mcp설치-figma
 description: |
-  Part 2 클립 2-1 (Figma MCP) 전용 설치 스킬. Claude.ai 통합 (Settings > Integrations > Figma > Connect) + 헬스 체크 + 첫 카피 추출 결과물을 약 3분 안에 완료. Personal Access Token / WebSocket / Figma Desktop 플러그인 모두 불필요. 마케터(비개발자) 기준 4단계 표준 흐름.
+  Part 2 클립 2-1 Figma MCP **통합 진입점**. 자체호스팅 Talk To Figma MCP Plugin 설치 +
+  WebSocket 브릿지(port 3055) + Figma Desktop 플러그인 연결 + 카드뉴스 흐름 진입까지 한 흐름.
+  Figma 공식 호스팅 MCP 의 한 달 6번 사용 제약 우회. 디자인 생성·수정 가능.
+  **이미 설치돼 있으면** 환경 점검 후 곧바로 채널 연결 → /카드뉴스 스킬로 핸드오프.
 
   자동 호출 트리거:
-  - **"Figma MCP 설치하자"** ⭐ 주요 트리거
-  - "피그마 MCP 설치"
-  - "Figma 연결 도와줘"
+  - **"피그마 mcp 시작하자"** ⭐ 통합 진입 (설치 + 카드뉴스까지)
+  - **"Figma MCP 설치하자"** ⭐ 설치 강조
+  - "피그마 MCP 설치" / "피그마 시작" / "Figma 시작"
+  - "talk to figma 설치"
+  - "Figma WebSocket 연결"
   - "디자인 자동화 환경 만들자"
   - "Part 2 / 2-1 설치 시작"
 
-  4단계:
-  ① 소개 (한 줄 정의·Before/After) →
-  ② 설치 (Claude.ai > Integrations > Connect 1클릭) →
-  ③ 작업 가능 업무 (도구 + 6 시나리오) →
-  ④ 결과물 1개 (본인 Figma 파일 카피·디자인 시스템 추출)
+  흐름 (상태 자동 라우팅, **빠진 단계는 묻지 않고 즉시 자동 진행**):
+  Step 0. 환경 점검 — 서버·플러그인·MCP 도구 상태 감지
+    ├ 미설치 → Step 1~5 (사전점검 → 설치 → MCP등록 → 플러그인 → 결과물1개)
+    └ 설치됨 → 소켓 미기동 시 백그라운드 자동 기동 → Step 6 으로 점프
+  Step 6. 채널 ID 받기 → join_channel + 3단 검증 (read→write→delete) 자동 → /카드뉴스 핸드오프
 
-  특이점: Claude.ai 통합 hosted MCP (Figma 가 직접 운영). OAuth 자동 갱신. .env 변수 0개. Figma 가 도구 자체 유지보수.
+  특이점: WebSocket 브릿지 (Claude ↔ MCP ↔ WS ↔ Figma Plugin). 사용 횟수 제한 없음. 보기 전용 계정 OK.
 ---
 
 # Part 2 / 2-1 Figma MCP 설치 (클립 전용)
 
-> 본 스킬은 Figma MCP 를 Claude.ai 통합으로 한 번 연결하고 본인 Figma 파일에서 카피·디자인 시스템 추출 1건을 시연하는 흐름. 마스터 스킬 `mcp설치` 의 4단계 표준을 Claude.ai 통합 패턴에 적용한 클립 전용 버전.
+> 본 스킬은 **Talk To Figma MCP Plugin** (자체호스팅 패키지) 을 설치하고 Figma Desktop 플러그인 + WebSocket 서버를 한 흐름에 연결한다.
+> Figma 공식 호스팅 MCP (mcp.figma.com) 와 달리 **사용 횟수 제한 없음 + 보기 전용 계정도 OK + 디자인 생성·수정 가능**.
 
 ## 🎬 스킬 시작 시 메시지
 
 ```
-🎨 Figma MCP 설치를 시작합니다.
+🎨 Figma MCP 가동을 시작합니다.
 
-먼저 짚고 갈 게 있어요:
-
-  Figma 가 공식 운영하는 hosted MCP 를 Claude.ai 통합으로 사용:
-  - Settings > Integrations > Figma > Connect 1클릭
-  - OAuth 자동 (Claude.ai 가 토큰 갱신)
-  - Personal Access Token / WebSocket / 플러그인 모두 불필요
-  - .env 변수 0개
+이 스킬은 두 단계를 한 흐름으로 진행해요:
+  1단계: 설치 — talk-to-figma 자체호스팅 (WebSocket 브릿지) 환경 셋업
+  2단계: 카드뉴스 제작 — /카드뉴스 스킬로 자동 핸드오프 (레퍼런스→기획→디자인)
 
 ────────────────────────────────
+왜 자체호스팅인가:
 
-총 4단계 (약 3분):
+  Talk To Figma MCP Plugin (Claude ↔ MCP ↔ WebSocket(3055) ↔ Figma Plugin)
+  · 사용 횟수 제한 없음 (Figma 공식 호스팅은 보기 전용 계정 한 달 6번 제약)
+  · 디자인 생성·수정·요소 편집 모두 가능 (공식 호스팅은 주로 읽기)
+  · 도구 약 60개 (생성 11 + 수정 9 + 텍스트 12 + 컴포넌트 3 + 페이지 5 + 문서 8 등)
+  · 마케터 활용 시나리오 (카드뉴스·캠페인 배너·로그인 페이지) 모두 가능
 
-  📖 STEP 1: MCP 소개 (1분)
-  ⚙️ STEP 2: 연결 (사용자 1클릭 · 1분)
-       2.1 claude.ai > Settings > Integrations > Figma > Connect
-       2.2 Figma OAuth 허용
-       2.3 헬스 체크
-  📋 STEP 3: 작업 가능 업무 (1분)
-  🎯 STEP 4: 결과물 1개 · 본인 Figma 파일 카피·디자인 시스템 추출 (1분)
-
-사전 점검 3가지:
-  □ Claude.ai 계정 (Claude Code 와 동일 계정)
-  □ Figma 계정 + 분석할 파일 1개
-  □ Chrome 또는 Safari
-
-전체 진행할까요? (y/n)
+────────────────────────────────
+먼저 Step 0 (환경 점검) 으로 현재 상태부터 확인합니다.
+이미 설치된 부분은 건너뛰고, 빠진 단계만 안내해요.
 ```
+
+→ Step 0 (환경 점검) 으로 진행.
 
 ---
 
-## 📖 STEP 1: MCP 소개
+## Step 0. 환경 점검 (자동 라우팅)
 
-### 1.1 표준 카드
+사용자에게 묻기 전에 아래 6가지를 자동 확인하고, **빠진 항목만** 보완 단계로 안내한다.
 
-| 항목 | 값 |
-|---|---|
-| 한 줄 정의 | 본인 Figma 파일을 Claude 가 직접 읽고·분석하고·신규 디자인 생성 |
-| 패키지 | Claude.ai 통합 hosted MCP (`https://mcp.figma.com/mcp` · Figma 공식 운영) |
-| 인증 방식 | OAuth · Claude.ai 자동 갱신 |
-| 도구 prefix | `mcp__claude_ai_Figma__*` |
-| 환경변수 | 없음 (0개) |
-| 무료 한도 | Figma 무료·유료 플랜 모두 가능 |
-| Before | 디자인 분석 30분·카피 변형 60분·코드 변환 2시간 |
-| After | 종합 분석 8초·카피 30패턴 30초·코드 변환 2분 |
+| # | 항목 | 확인 방법 | 통과 의미 |
+|---|---|---|---|
+| 1 | Figma Desktop · Node · Bun | `ls /Applications/Figma.app && node -v && which bun` | Step 1 통과 |
+| 2 | 패키지 빌드 산출물 | `ls ~/dev/claude-talk-to-figma-mcp/dist/talk_to_figma_mcp/server.js` | Step 2 통과 |
+| 3 | `.mcp.json` 에 figma 서버 | `grep '"figma"' .mcp.json` | Step 3 통과 |
+| 4 | `mcp__figma__*` 도구 로드 | `ToolSearch select:mcp__figma__join_channel` 로 존재 확인 | Claude 세션에 도구 활성 |
+| 5 | WebSocket 서버 (3055) | `curl -s http://localhost:3055/status` 응답 OK | 서버 가동 중 |
+| 6 | 플러그인 연결 (activeConnections ≥ 1) | status 응답의 `stats.activeConnections` | Figma Desktop 측 플러그인 실행 + 채널 보유 |
 
-### 1.2 마케터 관점 활용
+### 결과에 따른 분기
 
-- **카피 변형 자동** · 디자인 시안 헤드라인 10개 → 감성·실용·유머 3톤 = 30 패턴
-- **디자인 시스템 가이드** · 색상·폰트·간격 markdown 자동 정리
-- **디자인 → 코드** · React/HTML/Tailwind 컴포넌트 자동 변환
-- **이미지 자산 export** · webp/svg/png 일괄 추출
-- **신규 디자인 컨셉** · 본인 브랜드 톤 학습 후 자동 제안
+상태 표를 사용자에게 보여주고 다음 중 하나로 분기:
 
-### 1.3 Before/After
+- **1~6 모두 ✓** → 상태 1줄 보고 후 **즉시 Step 6** 진입 (채널 ID 요청). 별도 확인 없음.
+- **1~5 ✓, 6 ✗ (플러그인 미연결)** → 사용자에게 Figma Desktop 에서 플러그인 실행 + 채널 ID 안내 → **Step 6**
+- **1~4 ✓, 5 ✗ (서버 안 떠 있음)** → **즉시** `cd ~/dev/claude-talk-to-figma-mcp && bun socket` 을 `run_in_background: true` 로 기동 → `lsof -nP -iTCP:3055` 로 LISTEN 확인 → 플러그인 실행 안내 → **Step 6**
+- **3 ✗ (.mcp.json 미등록)** 또는 **4 ✗ (도구 미로드)** → Step 3 부터 진행 (등록 후 Claude Code 재시작 안내 필요)
+- **2 ✗ (패키지 미설치)** → Step 1 부터 정식 진행
+- **1 ✗ (사전 준비물 부족)** → Step 1 에서 사용자에게 설치 안내
 
-| 작업 | Before | After |
-|---|---|---|
-| 디자인 시안 텍스트 추출 | 30분 | 8초 |
-| 카피 톤 변형 (3톤 × 10개) | 60분 | 30초 |
-| 디자인 시스템 가이드 | 20분 | 자동 |
-| 이미지 자산 export | 15분 | 자동 |
-| 디자인 → 코드 | 2시간 | 2분 |
-| **캠페인 디자인 분석 1건** | **2시간** | **1~2분** |
-
-연 환산: 약 120시간 절감.
+> **자동 진행 원칙**: 빠진 단계 중 **사용자 액션이 필요 없는 항목** (소켓 기동, MCP 도구 검증, 채널 join, 3단 검증) 은 묻지 않고 즉시 실행. **사용자 액션이 필요한 항목** (Figma Desktop 플러그인 실행 → 채널 ID 발급, .mcp.json 등록 후 재시작) 에서만 멈춰서 안내한다.
 
 ---
 
-## ⚙️ STEP 2: 연결 (사용자 1클릭 · 약 1분)
-
-### 2.1 Claude.ai Settings 진입
+## Step 1. 사전 준비물 (3가지)
 
 ```
-1. https://claude.ai 접속 (Claude Code 와 같은 계정 로그인)
-2. 우상단 프로필 ⓘ 또는 ⚙ > "Settings"
-3. 좌측 메뉴 "Integrations" 클릭
-4. 통합 목록에서 "Figma" 찾기 → "Connect" 버튼 클릭
+✅ 필수 체크리스트
+  □ Figma Desktop 앱 설치됨 (https://www.figma.com/downloads/)
+  □ Node.js 설치됨 (v18+ 권장)
+  □ Bun 설치됨 (없으면 npx 가 자동 설치 시도)
+  □ Figma 계정 (무료 요금제 OK · 계정 종류 무관)
 ```
 
-### 2.2 Figma OAuth 허용
-
-```
-5. 브라우저 자동으로 Figma OAuth 페이지 열림
-   - Figma 로그인 (이미 로그인 상태면 패스)
-   - "Allow" 또는 "Authorize Claude" 클릭
-6. Claude.ai > Integrations 화면으로 자동 복귀
-   → Figma 항목에 ✓ Connected 표시 확인
-```
-
-### 2.3 헬스 체크
+확인 명령:
 
 ```bash
-claude mcp list | grep -i figma
-# → claude.ai Figma: https://mcp.figma.com/mcp - ✓ Connected
+which node && node --version  # v18 이상이면 OK
+which bun                       # 없으면 다음 단계에서 자동 설치
+ls /Applications/Figma.app      # Figma Desktop 설치 확인
 ```
 
-`✓ Connected` 가 아니면:
-- Claude.ai 와 Claude Code 의 로그인 계정 동일한지 확인
-- Claude Code 완전 종료 후 재시작
+→ 모두 OK 면 Step 2.
 
 ---
 
-## 📋 STEP 3: 작업 가능 업무
+## Step 2. Talk To Figma MCP Plugin 패키지 설치 (1줄)
 
-### 3.1 노출 도구 (Claude.ai 통합 figma)
+설치 폴더 선택 후 한 줄 실행:
 
-| 도구 | 기능 |
-|---|---|
-| `get_design_context` ★ | 파일 종합 추출 (컴포넌트·텍스트·이미지) |
-| `get_screenshot` | 특정 프레임 스크린샷 |
-| `get_metadata` | 파일 메타데이터 (페이지·프레임 구조) |
-| `search_design_system` | 본인 디자인 시스템 검색 |
-| `get_variable_defs` | 디자인 토큰 (컬러·간격·폰트) |
-| `use_figma` / `generate_figma_design` | 디자인 생성·수정 |
-| `create_new_file` | 새 Figma 파일 생성 |
-| `get_figjam` | FigJam 보드 다이어그램 |
+```bash
+# 원하는 폴더로 이동 (예: marketing-os 옆)
+cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Desktop/0.마케터를\ 위한\ 클로드코드
 
-> 도구 prefix 와 정확한 갯수는 Claude Code 에서 `claude mcp list` 후 자동완성으로 확인. Figma 가 직접 유지보수하므로 수시 업데이트.
+# 한 줄 설치 (git clone + Bun 의존성 + WebSocket 서버 자동 기동)
+npx claude-talk-to-figma-mcp
+```
 
-### 3.2 마케터 자주 쓰는 6 시나리오
+`npx` 가 자동으로 다음 5가지를 수행 :
+1. GitHub 에서 `arinspunk/claude-talk-to-figma-mcp` 클론
+2. Bun 런타임 자동 감지·설치 (없으면)
+3. TypeScript 빌드 (`bun run build`)
+4. WebSocket 서버 기동 (`bun socket` · port 3055)
+5. 상태 확인 URL 출력 : `http://localhost:3055/status`
 
-| 시나리오 | 자연어 명령 | 소요 |
+> 💡 수동 방식 선호 시 :
+> ```bash
+> git clone https://github.com/arinspunk/claude-talk-to-figma-mcp.git
+> cd claude-talk-to-figma-mcp
+> bun install
+> bun run build
+> bun socket
+> ```
+
+---
+
+## Step 3. Claude Code 에 MCP 등록
+
+`marketing-os/.mcp.json` 에 다음 항목 추가 :
+
+```json
+{
+  "mcpServers": {
+    "figma": {
+      "command": "bun",
+      "args": [
+        "run",
+        "<설치_경로>/claude-talk-to-figma-mcp/dist/talk_to_figma_mcp/server.js"
+      ]
+    }
+  }
+}
+```
+
+`<설치_경로>` 는 Step 2 에서 `npx` 가 클론한 폴더 (보통 현재 디렉토리 아래 `claude-talk-to-figma-mcp/`).
+
+또는 DXT 패키지 방식 (Claude Desktop only) :
+
+1. https://github.com/arinspunk/claude-talk-to-figma-mcp/releases 에서 최신 `.dxt` 다운로드
+2. `.dxt` 파일 더블클릭 → Claude Desktop 자동 설치
+3. Claude Desktop 재시작
+
+등록 검증 :
+
+```bash
+claude mcp list | grep figma
+# figma: bun run .../server.js - ✓ Connected
+```
+
+---
+
+## Step 4. Figma Plugin 임포트 + 채널 연결
+
+### 4-1. 플러그인 임포트 (Figma Desktop 에서)
+
+1. Figma Desktop 앱 실행
+2. 메뉴 `Plugins` → `Development` → `Import plugin from manifest...`
+3. 파일 선택 : `<설치_경로>/claude-talk-to-figma-mcp/src/claude_mcp_plugin/manifest.json`
+4. 임포트 완료 후 디자인 파일 1개 열고 `Plugins` → `Development` → `Claude MCP Plugin` 실행
+
+### 4-2. 채널 ID 발급
+
+플러그인 창에서 자동으로 channel ID 가 표시됨 (예: `channel-abc123`).
+
+### 4-3. Claude Code 에서 연결
+
+```
+> Talk to Figma, channel channel-abc123
+```
+
+Claude 가 응답 :
+
+```
+✅ Connected to Figma channel channel-abc123.
+   Document: 본인 파일명
+   Pages: N
+   Ready to create / modify designs.
+```
+
+---
+
+## Step 5. 결과물 1개 직접 만들기 (자연어로 디자인 생성)
+
+연결 검증 + 첫 디자인 생성을 한 번에 :
+
+```
+> 다크모드 로그인 페이지를 만들어줘:
+   - 1440x900 프레임
+   - 중앙에 로그인 카드 (480x520, radius 16)
+   - 헤드라인 "Welcome back" (32pt, white)
+   - 이메일·비밀번호 input 2개
+   - 파란 로그인 버튼 (480x56, radius 8)
+   - 배경은 진한 네이비 #0F172A
+```
+
+Claude 가 약 30초~1분 내 Figma 화면에 디자인을 직접 그려냅니다. 호출 도구 (자동) :
+
+- `create_frame` × 2 (배경 · 로그인 카드)
+- `create_text` × 4 (헤드라인 · placeholder × 2 · 버튼 텍스트)
+- `create_rectangle` × 3 (input × 2 · 버튼)
+- `set_fill_color` × N
+- `set_corner_radius` × N
+- `set_auto_layout` × 1 (카드 정렬)
+
+---
+
+## Step 6. 채널 연결 + 카드뉴스 흐름 진입
+
+설치(Step 1~5)가 끝났거나 Step 0 에서 점프해 온 경우, **여기가 카드뉴스 제작으로 넘어가는 다리.**
+
+### 6-1. 채널 연결 + 3단 자동 검증
+
+> **사용자에게 묻는다**: "Figma 플러그인 창에 표시된 channel ID 를 알려주세요."
+>   (보통 8자 임의 문자열. 플러그인 창 우측 상단 또는 본문에 노출.)
+
+받은 ID 로 즉시 **3단 검증 자동 실행** (사용자 확인 없이 연달아 호출):
+
+| 단계 | 호출 | 검증 의미 |
 |---|---|---|
-| A. 카피 추출 + 톤 변형 ★ | "이 Figma 파일 헤드라인 10개 + 감성/실용/유머 3톤씩" | 30초 |
-| B. 디자인 시스템 가이드 | "이 파일의 컬러·폰트·간격 markdown" | 1분 |
-| C. 디자인 → 코드 | "이 프레임을 React + Tailwind 코드로" | 2분 |
-| D. 이미지 자산 export | "이 페이지의 모든 이미지를 webp 로" | 1분 |
-| E. 신규 디자인 컨셉 | "Spring 톤으로 여름 캠페인 디자인 컨셉" | 3~5분 |
-| F. 디자인 diff | "이 파일 지난주 vs 이번주 변경" | 30초 |
+| ① join | `mcp__figma__join_channel({ channel: "<ID>" })` | 소켓·채널 라이브 |
+| ② read | `mcp__figma__get_document_info()` | 파일 접근 OK · 페이지·노드 수 표시 |
+| ③ write | `mcp__figma__create_text({ x:100, y:100, text:"connection-test", parentId:"<page-id>" })` | 편집 권한 OK |
+| ④ delete | `mcp__figma__delete_node({ nodeId:"<just-created>" })` | 흔적 제거 + 정리 |
 
-### 3.3 다른 MCP 와 조합
+- ① 실패 ("Failed to verify connection...") → 플러그인이 그 채널에 없는 상태. **Figma Desktop 에서 플러그인 재실행** 안내 + 새 ID 받기. 임의 재시도 금지.
+- ③ timeout (`write timeout`) → 파일이 view-only 거나 parentId 누락. 사용자에게 **편집 권한 있는 파일 열기** 안내 후 ②부터 재시도.
 
-- **+ Part 5 콘텐츠 에이전트** · Figma 카피 → Buffer 4채널 동시 예약
-- **+ Higgsfield MCP** · Figma 디자인 톤 → 신규 이미지·영상 생성
-- **+ Notion MCP** · 디자인 시스템 가이드 → Notion 페이지 자동 게시
-- **+ 영상제작 (Hyperframes)** · Figma 슬라이드 → 영상 자동 변환
+3단 검증 성공 시 1줄 요약 (파일명·페이지 수·노드 수) 보여주고 6-2 로 즉시 진행.
 
----
+### 6-2. /카드뉴스 스킬 핸드오프
 
-## 🎯 STEP 4: 결과물 1개 · Figma 파일 종합 추출
+연결 확인되면 사용자에게:
 
-### 4.1 한 줄 명령
+> "이제 카드뉴스 제작 흐름으로 넘어갑니다. **/카드뉴스 스킬**이 게이트 0(레퍼런스·콘텐츠·카드수)부터 단계별로 물어봅니다. 시작할까요?"
 
-```
-사용자: "이 Figma 파일의 모든 텍스트 + 컴포넌트 추출해줘:
-       <본인 Figma URL>"
-```
+OK 받으면 [`/카드뉴스`](../../../../.claude/skills/카드뉴스/SKILL.md) 스킬을 호출 (또는 사용자가 "카드뉴스 만들어줘" 발화).
 
-본인 Figma 파일 URL 형식:
-- `https://www.figma.com/design/<file_id>/<file_name>`
-- `https://www.figma.com/file/<file_id>/<file_name>` (구버전 URL 도 OK)
+### 핸드오프 시 전달할 컨텍스트
 
-### 4.2 자동 실행
-
-```
-1. Claude → mcp__claude_ai_Figma__get_design_context 호출
-   - file URL 또는 file_id 자동 추출
-   - 페이지·프레임·컴포넌트·텍스트·이미지 모두 회수
-
-2. Claude → 결과 정리:
-   - 헤드라인·CTA·본문 텍스트 추출
-   - 컬러 시스템 (hex)
-   - 폰트 (이름·크기 분포)
-   - 이미지 자산 갯수
-
-3. 마크다운 표 + 요약 응답 (약 8초)
-```
-
-성공 응답 예시:
-```
-📁 Spring Campaign 2026
-├── 페이지 4개 / 프레임 12개 / 컴포넌트 38개 / 텍스트 87개
-
-🎨 컬러 시스템
-  - Primary:    #BC4749
-  - Secondary:  #2D3047
-  - Accent:     #FFBC42
-
-🖋️ 폰트
-  - 헤드: Pretendard Bold (48~96px)
-  - 본문: Pretendard Regular (16~20px)
-
-📝 헤드라인 10개 추출 완료 (카피 변형 가능)
-🖼️ 이미지 12개 export 가능
-```
-
-자세히는 [결과물-예시.md](../결과물-예시.md).
-
-### 4.3 다음 단계
-
-```
-🎉 Figma MCP 연결 완료. 발전 경로:
-
-  A. 카피 변형 30패턴:
-     "위 헤드라인 10개를 감성·실용·유머 3톤씩"
-
-  B. 디자인 → React 코드:
-     "이 프레임을 React + Tailwind 컴포넌트로 변환"
-
-  C. 신규 디자인 컨셉:
-     "Spring 톤으로 여름 캠페인 디자인 컨셉 + 컬러 팔레트 제안"
-
-  D. 다른 MCP 와 조합:
-     - Figma 카피 → Buffer 4채널 예약
-     - Figma 디자인 시스템 → Notion 가이드 페이지
-     - Figma 톤 → Higgsfield 이미지·영상 생성
-
-  E. 다음 MCP 설치:
-     - 2-2 youtube-data · YouTube 채널·키워드 분석
-```
+`/카드뉴스` 스킬 게이트 0 의 4가지 질문 중 이미 확정된 것은 건너뛰도록 전달:
+- 채널 ID (이미 join 함) → 게이트 0 질문 4 스킵
+- 기본 레퍼런스 경로 `curriculum/part02-MCP12개/04-figma/디자인 레퍼런스/marketor_cards.pdf` 가 있으면 후보로 제시
 
 ---
 
-## 🚨 트러블슈팅 (Figma MCP 한정)
+## 트러블슈팅
 
 | 증상 | 원인 | 해결 |
 |---|---|---|
-| Claude.ai > Integrations 에 Figma 없음 | 지역·계정 권한 차이 | claude.ai/integrations 직접 접속 시도 |
-| `mcp__claude_ai_Figma__*` 도구 안 보임 | 통합 미연결 또는 Claude Code 재시작 안 함 | Settings > Integrations > Figma > Connect 확인 + Claude Code 재시작 |
-| `Permission denied` (특정 파일) | 본인 접근 권한 없는 파일 | Figma 에서 본인 계정에 공유 권한 추가 |
-| `Figma file not found` | URL 오타 또는 비공개 파일 | URL 정확성 + 본인 접근 권한 확인 |
-| FigJam 보드 추출 안 됨 | 일반 Figma 도구로 호출 | `get_figjam` 도구 명시적 사용 |
-| 한국어 카피 깨짐 (드뭄) | 폰트 한글 미지원 | Pretendard / Spoqa Han Sans 설정 확인 |
-| OAuth 토큰 만료 | 장기 미사용 | Settings > Integrations > Figma > Disconnect > Connect 재진행 |
+| `npx` 가 멈춤 | Bun 미설치 + 네트워크 느림 | 별도 터미널에서 `curl -fsSL https://bun.sh/install \| bash` 먼저 |
+| `localhost:3055` 응답 없음 | `bun socket` 미기동 | 설치 폴더에서 `bun socket` 수동 실행 |
+| Figma Plugin 임포트 실패 | manifest.json 경로 오타 | 절대 경로로 다시 선택 |
+| `Plugin not found` (Claude) | Figma 에 플러그인 미실행 | Figma 메뉴 → Plugins → Development → Claude MCP Plugin |
+| `Channel ID mismatch` | 플러그인 재시작 후 ID 변경 | 새 channel ID 복사 후 다시 "Talk to Figma, channel <ID>" |
+| `Font not found` | 본인 PC 에 폰트 없음 | `load_font_async` 자동 호출. 또는 영문 폰트 (Inter) 로 우회 |
+| `Permission denied` | Figma 파일 편집 권한 없음 | 본인 계정으로 새 파일 생성 또는 편집자 권한 받기 |
+| Port 3055 충돌 | 다른 프로세스 점유 | `lsof -i :3055` 확인 후 종료 |
 
-## 📝 강의 실습 (실습.md 통합)
+---
 
-### 실습 한 줄 요약
+## 검증된 산출물 (5분 안에 가능)
 
-claude.ai > Settings > Integrations > Figma > Connect 1클릭 + 본인 Figma 파일 URL 전달 → 8초 안에 종합 분석.
+- 다크모드 로그인 페이지 (위 Step 5)
+- 캠페인 배너 1080×1080 (헤드라인 + CTA 버튼)
+- 인스타 카드뉴스 5장 (브랜드 컬러 적용)
+- 가격표 비교 표 (3 플랜)
+- 모바일 앱 첫 화면 (360×800)
 
-### 마케터 5패턴 · 정기 운영
+## 호출 스킬
 
-```
-[역할] D2C 브랜드의 콘텐츠 마케터
+| 시점 | 스킬 | 역할 |
+|---|---|---|
+| 통합 진입 | 본 스킬 (`/mcp설치-figma`) | Step 0 환경점검 → 설치 → Step 6 카드뉴스 핸드오프 |
+| 카드뉴스 제작 | [`/카드뉴스`](../../../../.claude/skills/카드뉴스/SKILL.md) | 레퍼런스→기획→디자인 3 게이트 (인터랙티브) |
+| 자유 운영 | 자연어 ("로그인 페이지 만들어줘") | Claude 가 60개 도구 자동 호출 |
+| 디자인 분석 | `get_document_info` · `scan_text_nodes` | 본인 파일 카피 추출 |
 
-[입력] 디자이너가 보낸 Figma 캠페인 시안 URL
+Part 5 콘텐츠·카피 에이전트 5종이 본 MCP 를 자동 호출 (Figma 디자인 → 카피 → 발행).
 
-[산출물]
-1. 헤드라인 10개 + 톤별 3패턴 (30 패턴)
-2. 컬러 시스템 markdown
-3. 추천 조합 (인스타·광고·콘텐츠별)
+## 참고 자료
 
-[제약]
-- 한국어 자연어
-- 본인 브랜드 톤 유지
-
-[검증]
-- 추출 텍스트 갯수 ≥ 실제
-- 컬러 hex 100% 정확
-```
-
-### 응용 과제
-
-1. 디자인 → React + Tailwind 컴포넌트 변환
-2. 본인 브랜드 톤 학습 후 신규 캠페인 컨셉
-3. Figma + Buffer 결합 (디자인 → 카피 → 4채널 예약)
-
-## 강의 연결
-
-- 본 스킬은 [클립 2-1 Figma MCP 대본](../대본/2-1-figma.md) 의 슬라이드 06 "설치 실습" 시연에서 호출
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준을 Claude.ai 통합 패턴에 적용
-- 본 스킬로 연결된 MCP 는 **Part 5 콘텐츠·카피 에이전트 5종의 기반**:
-  - `social-copy-writer`, `newsletter-writer`, `ad-copy-ab`, `brand-voice`, `landing-page-copy`
-- Part 10 의 `weekly-campaign-publisher` 가 Figma + Buffer + Discord 통합 자동화
-
-## 사전 검증된 설정값
-
-| 항목 | 값 |
-|---|---|
-| 패키지 | Claude.ai 통합 hosted MCP (`mcp.figma.com`) |
-| 인증 방식 | OAuth · Claude.ai 자동 갱신 |
-| 설치 위치 | Claude.ai > Settings > Integrations > Figma > Connect |
-| 환경변수 | 없음 (0개) |
-| 도구 prefix | `mcp__claude_ai_Figma__*` |
-| Figma 플랜 | 무료 / Professional / Organization 모두 가능 |
-| 접근 권한 | 본인 Figma 계정이 접근 가능한 모든 파일 |
+- 패키지 공식 : https://github.com/arinspunk/claude-talk-to-figma-mcp
+- 원본 (Cursor 버전) : https://github.com/sonnylazuardi/cursor-talk-to-figma-mcp
+- 도구 60개 카탈로그 : [`../README.md`](../README.md)
+- 실습 시나리오 : [`../실습.md`](../실습.md)

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>쿠팡 광고 1page 리포트 — 2026.01</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --sub:#666; --line:#e3e3e3; --bg:#fff;
+    --blue:#1a73e8; --blue-bg:#e8f0fe; --red:#d93025; --red-bg:#fce8e6;
+    --green:#188038; --green-bg:#e6f4ea; --amber:#b06000; --amber-bg:#fef7e0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#f0f0f0;}
+  /* A4 세로 1장 */
+  @page{ size:A4 portrait; margin:0; }
+  .page{
+    width:210mm; min-height:297mm; margin:8mm auto; background:var(--bg);
+    padding:11mm 12mm; box-shadow:0 2px 12px rgba(0,0,0,.12);
+  }
+  h1{font-size:18pt; font-weight:800; letter-spacing:-.4px;}
+  .meta{font-size:8pt; color:var(--sub); margin-top:3px;}
+  h2{font-size:10.5pt; font-weight:700; margin:11px 0 5px; padding-left:7px; border-left:3px solid var(--blue);}
+  /* KPI */
+  .kpi{display:grid; grid-template-columns:repeat(4,1fr); gap:7px; margin-top:10px;}
+  .kpi .card{border:1px solid var(--line); border-radius:7px; padding:8px 9px;}
+  .kpi .lbl{font-size:7.5pt; color:var(--sub);}
+  .kpi .val{font-size:14pt; font-weight:800; letter-spacing:-.5px; margin-top:2px;}
+  .kpi .note{font-size:7pt; margin-top:2px;}
+  .tag{display:inline-block; font-size:7pt; font-weight:700; padding:1px 5px; border-radius:4px;}
+  .t-red{color:var(--red); background:var(--red-bg);} .t-green{color:var(--green); background:var(--green-bg);}
+  .t-amber{color:var(--amber); background:var(--amber-bg);} .t-blue{color:var(--blue); background:var(--blue-bg);}
+  /* 핵심 3 */
+  .hl{display:grid; grid-template-columns:repeat(3,1fr); gap:7px;}
+  .hl .box{border:1px solid var(--line); border-left:3px solid; border-radius:6px; padding:7px 9px; font-size:8pt; line-height:1.4;}
+  .hl .box b{display:block; font-size:9pt; margin-bottom:2px;}
+  .b-red{border-left-color:var(--red);} .b-amber{border-left-color:var(--amber);} .b-green{border-left-color:var(--green);}
+  /* tables */
+  table{width:100%; border-collapse:collapse; font-size:8pt;}
+  th,td{padding:3.5px 6px; text-align:left; border-bottom:1px solid var(--line);}
+  th{background:var(--blue-bg); font-weight:700; font-size:7.5pt;}
+  td.n,th.n{text-align:right; font-variant-numeric:tabular-nums;}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start;}
+  .two h2{margin-top:0;}
+  .waste th{background:var(--red-bg);}
+  /* action */
+  ol.act{list-style:none; counter-reset:a; margin-top:4px;}
+  ol.act li{counter-increment:a; position:relative; padding:5px 6px 5px 26px; font-size:8.5pt; line-height:1.4; border-bottom:1px dashed var(--line);}
+  ol.act li::before{content:counter(a); position:absolute; left:4px; top:5px; width:16px; height:16px; background:var(--blue); color:#fff; border-radius:50%; font-size:7.5pt; font-weight:700; text-align:center; line-height:16px;}
+  ol.act li b{color:var(--ink);}
+  ol.act li span{color:var(--sub); font-size:7.5pt;}
+  footer{margin-top:12px; padding-top:7px; border-top:1px solid var(--line); font-size:7pt; color:var(--sub); display:flex; justify-content:space-between;}
+  @media print{ body{background:#fff;} .page{margin:0; box-shadow:none;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>쿠팡 광고 1page 리포트</h1>
+    <p class="meta">기간 2026.01.01 ~ 01.31 (31일 전체 집행) · 전환 14일 기준 · 광고유형 매출 최적화 · 데이터 1,521행</p>
+  </header>
+
+  <section class="kpi">
+    <div class="card"><div class="lbl">광고비</div><div class="val">695만원</div><div class="note">월 6,950,187원</div></div>
+    <div class="card"><div class="lbl">전환매출(14일)</div><div class="val">1,580만원</div><div class="note">15,797,500원</div></div>
+    <div class="card"><div class="lbl">ROAS</div><div class="val">227%</div><div class="note"><span class="tag t-amber">🟡 손익분기 점검</span></div></div>
+    <div class="card"><div class="lbl">전환 / CPA</div><div class="val">106건</div><div class="note">주문당 65,568원 · CVR 2.40%</div></div>
+  </section>
+
+  <h2>이번 달 핵심 3가지</h2>
+  <div class="hl">
+    <div class="box b-red"><b>광고비 46.6% 낭비</b>광고비 발생 키워드 727개 중 676개가 매출 0. 약 226만원이 성과 없이 소진.</div>
+    <div class="box b-amber"><b>제설기 캠페인 = 매출 0</b>제설기 2개 캠페인이 65,608원 쓰고 매출 0원. 시즌·소재 점검 또는 중단 1순위.</div>
+    <div class="box b-green"><b>검색 영역이 효율 핵심</b>검색 ROAS 241%·CTR 2.15% vs 비검색 197%·0.09%. 예산을 검색으로 이동.</div>
+  </div>
+
+  <h2>캠페인별 · 지면별 성과</h2>
+  <div class="two">
+    <table>
+      <thead><tr><th>캠페인</th><th class="n">광고비</th><th class="n">매출</th><th class="n">ROAS</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>250801 전기톱</td><td class="n">6,868,248</td><td class="n">15,767,500</td><td class="n">230%</td><td><span class="tag t-green">전 매출 견인</span></td></tr>
+        <tr><td>251210 제설기</td><td class="n">43,778</td><td class="n">0</td><td class="n">0%</td><td><span class="tag t-red">중단</span></td></tr>
+        <tr><td>260125 제설기</td><td class="n">21,830</td><td class="n">0</td><td class="n">0%</td><td><span class="tag t-red">중단</span></td></tr>
+        <tr><td>240830 테스트</td><td class="n">16,331</td><td class="n">30,000</td><td class="n">184%</td><td><span class="tag t-amber">정리</span></td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>노출 지면</th><th class="n">광고비</th><th class="n">ROAS</th><th class="n">CTR</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>검색 영역</td><td class="n">4,847,696</td><td class="n">241%</td><td class="n">2.15%</td><td><span class="tag t-green">비중 확대</span></td></tr>
+        <tr><td>비검색(자동)</td><td class="n">2,102,491</td><td class="n">197%</td><td class="n">0.09%</td><td><span class="tag t-amber">비중 축소</span></td></tr>
+        <tr><td>리타겟팅</td><td class="n">0</td><td class="n">—</td><td class="n">1.85%</td><td><span class="tag t-blue">과금 없음</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two">
+    <div>
+      <h2>매출 TOP 키워드 (효자)</h2>
+      <table>
+        <thead><tr><th>키워드</th><th class="n">광고비</th><th class="n">매출</th><th class="n">ROAS</th></tr></thead>
+        <tbody>
+          <tr><td>나무자르는 전기톱</td><td class="n">593,080</td><td class="n">1,372,500</td><td class="n">231%</td></tr>
+          <tr><td>충전식 전기톱</td><td class="n">567,060</td><td class="n">915,000</td><td class="n">161%</td></tr>
+          <tr><td>엔진톱</td><td class="n">61,989</td><td class="n">610,000</td><td class="n" style="color:var(--green);font-weight:700">984%</td></tr>
+          <tr><td>전동톱</td><td class="n">43,282</td><td class="n">457,500</td><td class="n" style="color:var(--green);font-weight:700">1,057%</td></tr>
+          <tr><td>크래프트볼트 전기톱</td><td class="n">26,599</td><td class="n">355,000</td><td class="n" style="color:var(--green);font-weight:700">1,335%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2 style="border-left-color:var(--red)">낭비 키워드 (매출 0 · 즉시 조치)</h2>
+      <table class="waste">
+        <thead><tr><th>키워드</th><th class="n">광고비</th><th class="n">클릭</th><th>조치</th></tr></thead>
+        <tbody>
+          <tr><td>무선 충전톱</td><td class="n">100,780</td><td class="n">31</td><td><span class="tag t-red">중단</span></td></tr>
+          <tr><td>무선 전동톱국산</td><td class="n">99,037</td><td class="n">35</td><td><span class="tag t-red">중단</span></td></tr>
+          <tr><td>국산 충전식 나무전기톱</td><td class="n">59,327</td><td class="n">21</td><td><span class="tag t-red">중단</span></td></tr>
+          <tr><td>충전식 체인톱</td><td class="n">38,971</td><td class="n">14</td><td><span class="tag t-amber">입찰↓</span></td></tr>
+          <tr><td><b>매출 0 키워드 총계</b></td><td class="n"><b>2,259,634</b></td><td class="n">1,182</td><td><span class="tag t-red">46.6%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h2>이번 주 액션 플랜 (우선순위)</h2>
+  <ol class="act">
+    <li><b>제설기 캠페인 2개 중단/재점검</b> — 광고비 6.6만원 집행 매출 0원. <span>→ 즉시 손실 차단</span></li>
+    <li><b>매출 0 키워드 상위 20개 입찰 중단·제외</b> — 월 226만원(46.6%) 낭비 중. <span>→ 절감 예산을 효자 키워드로 재배분</span></li>
+    <li><b>비검색(자동) 지면 예산 비중 축소</b> — ROAS 197%·CTR 0.09%로 비효율. <span>→ 전체 ROAS 227%→300%+ 견인</span></li>
+    <li><b>엔진톱·전동톱·크래프트볼트 입찰 증액</b> — ROAS 984~1,335% 고효율. <span>→ 적은 비용으로 매출 추가 확보</span></li>
+    <li><b>'전기톱'·'충전식 전기톱' 입찰 하향</b> — 대표키워드인데 ROAS 129~161%. <span>→ 효율 개선 후 예산 재투입</span></li>
+  </ol>
+
+  <footer>
+    <span>출처: A01217152_pa_daily_keyword_20260101_20260131.xlsx</span>
+    <span>marketing-os · 자동 생성 2026-05-25</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>쿠팡 검색광고 월간 리포트 : 2026-01</title>
+<style>
+  @page { size: A4; margin: 10mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+    color: #1a1a1a;
+    background: #fff;
+    font-size: 10.5px;
+    line-height: 1.4;
+    padding: 14px 18px;
+    width: 210mm;
+    min-height: 297mm;
+  }
+  header {
+    border-bottom: 2.5px solid #1a1a1a;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  header h1 { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
+  header .meta { text-align: right; font-size: 10px; color: #555; }
+  header .meta b { color: #1a1a1a; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 10px 0 5px;
+    padding-left: 6px;
+    border-left: 3px solid #4285f4;
+  }
+
+  /* KPI 박스 */
+  .kpi-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 8px; }
+  .kpi {
+    background: #f7f9fc;
+    border: 1px solid #e3e8ef;
+    border-radius: 5px;
+    padding: 7px 8px;
+    text-align: center;
+  }
+  .kpi .label { font-size: 9px; color: #6a7787; font-weight: 600; letter-spacing: 0.2px; }
+  .kpi .value { font-size: 14px; font-weight: 800; color: #1a1a1a; margin-top: 2px; }
+  .kpi .unit { font-size: 9px; color: #6a7787; }
+  .kpi.hi .value { color: #c5221f; }
+  .kpi.lo .value { color: #1e8e3e; }
+
+  /* 인사이트 */
+  .insights {
+    background: #fff8e1;
+    border-left: 3px solid #f9ab00;
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin-bottom: 9px;
+    font-size: 10.5px;
+  }
+  .insights b { color: #b06000; }
+  .insights ul { list-style: none; padding-left: 0; }
+  .insights li { padding: 2px 0; }
+  .insights li::before { content: "▸ "; color: #f9ab00; font-weight: 700; }
+
+  /* 표 */
+  table { width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 6px; }
+  table th {
+    background: #4285f4;
+    color: #fff;
+    padding: 5px 6px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 10px;
+  }
+  table th:first-child { text-align: left; }
+  table td {
+    padding: 4px 6px;
+    border-bottom: 1px solid #eef1f5;
+    text-align: right;
+  }
+  table td:first-child { text-align: left; font-weight: 600; }
+  table tr.dead { background: #fce4ec; }
+  table tr.dead td { color: #b00020; }
+  table tr.hero { background: #e6f4ea; }
+  table tr.hero td { color: #137333; font-weight: 700; }
+  .num-pos { color: #1e8e3e; font-weight: 700; }
+  .num-neg { color: #c5221f; font-weight: 700; }
+  .num-zero { color: #6a7787; }
+
+  /* 2단 컬럼 */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .col h3 {
+    font-size: 10.5px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #1a1a1a;
+  }
+  .col h3 .badge {
+    display: inline-block;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 4px;
+  }
+  .col h3.danger .badge { background: #c5221f; }
+  .col h3.good .badge { background: #1e8e3e; }
+
+  /* 액션 박스 */
+  .actions {
+    background: #1a1a1a;
+    color: #fff;
+    border-radius: 5px;
+    padding: 9px 12px;
+    margin-top: 8px;
+  }
+  .actions h3 { font-size: 11px; margin-bottom: 5px; color: #ffd54f; }
+  .actions ol { padding-left: 18px; }
+  .actions li { padding: 1.5px 0; font-size: 10.5px; }
+  .actions li b { color: #ffd54f; }
+
+  footer {
+    margin-top: 8px;
+    padding-top: 5px;
+    border-top: 1px solid #e3e8ef;
+    font-size: 9px;
+    color: #6a7787;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>쿠팡 검색광고 월간 리포트 : 전기톱·제설기</h1>
+  <div class="meta">
+    기간 <b>2026-01-01 ~ 2026-01-31</b> (31일)<br>
+    계정 <b>A01217152</b> · 캠페인 4개 · 키워드 727개
+  </div>
+</header>
+
+<!-- 핵심 KPI -->
+<div class="section-title">① 핵심 KPI</div>
+<div class="kpi-row">
+  <div class="kpi"><div class="label">광고비</div><div class="value">₩6.95M</div><div class="unit">6,950,187원</div></div>
+  <div class="kpi"><div class="label">매출</div><div class="value">₩15.8M</div><div class="unit">15,797,500원</div></div>
+  <div class="kpi lo"><div class="label">ROAS</div><div class="value">227%</div><div class="unit">목표 200% 달성</div></div>
+  <div class="kpi"><div class="label">노출</div><div class="value">2.75M</div><div class="unit">2,746,341회</div></div>
+  <div class="kpi"><div class="label">클릭</div><div class="value">4,424</div><div class="unit">CTR 0.16%</div></div>
+  <div class="kpi"><div class="label">주문</div><div class="value">106건</div><div class="unit">CVR 2.4%</div></div>
+  <div class="kpi"><div class="label">CPC / CPA</div><div class="value">1,571</div><div class="unit">CPA 65,568</div></div>
+</div>
+
+<!-- 인사이트 -->
+<div class="insights">
+  <ul>
+    <li><b>낭비 광고비 ₩2.26M</b> : 727 키워드 중 <b>676개(93%)</b>가 매출 0원, 전체 광고비의 <b>32.5%</b> 소진</li>
+    <li><b>제설기 캠페인 2개</b> 광고비 ₩65,608 전액 매출 0원 → 계절 종료, 일시정지 후보</li>
+    <li><b>검색 영역</b>(ROAS 241%) &gt; 비검색 영역(197%) · 비검색은 노출 96% 차지하나 효율 낮음</li>
+    <li>효자 키워드 <b>엔진톱 984%</b>, 크래프트볼트 1,335% · 부진 대표 키워드 <b>'전기톱' 129%</b></li>
+  </ul>
+</div>
+
+<!-- 캠페인 + 영역 (2단) -->
+<div class="two-col">
+  <div class="col">
+    <div class="section-title">② 캠페인별 성과</div>
+    <table>
+      <thead>
+        <tr><th>캠페인</th><th>광고비</th><th>매출</th><th>ROAS</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hero"><td>250801 전기톱</td><td>6,868,248</td><td>15,767,500</td><td>229.6%</td></tr>
+        <tr class="dead"><td>251210 제설기</td><td>43,778</td><td>0</td><td>0%</td></tr>
+        <tr class="dead"><td>260125 제설기</td><td>21,830</td><td>0</td><td>0%</td></tr>
+        <tr><td>240830 테스트</td><td>16,331</td><td>30,000</td><td>183.7%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <div class="section-title">③ 영역별 효율</div>
+    <table>
+      <thead>
+        <tr><th>영역</th><th>광고비</th><th>매출</th><th>ROAS</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hero"><td>검색 영역</td><td>4,847,696</td><td>11,660,000</td><td>240.5%</td></tr>
+        <tr><td>비검색 영역</td><td>2,102,491</td><td>4,137,500</td><td>196.8%</td></tr>
+        <tr><td>리타겟팅 PA</td><td>0</td><td>0</td><td>:</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TOP 키워드 + 낭비 키워드 (2단) -->
+<div class="two-col">
+  <div class="col">
+    <h3 class="good">④ 효자 키워드 TOP 8 <span class="badge">증액 후보</span></h3>
+    <table>
+      <thead>
+        <tr><th>키워드</th><th>광고비</th><th>매출</th><th>ROAS</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hero"><td>엔진톱</td><td>61,989</td><td>610,000</td><td>984%</td></tr>
+        <tr class="hero"><td>전동톱</td><td>43,282</td><td>457,500</td><td>1,057%</td></tr>
+        <tr class="hero"><td>크래프트볼트 전기톱</td><td>26,599</td><td>355,000</td><td>1,335%</td></tr>
+        <tr><td>나무자르는 전기톱</td><td>593,080</td><td>1,372,500</td><td>231%</td></tr>
+        <tr><td>충전식 전기톱</td><td>567,060</td><td>915,000</td><td>161%</td></tr>
+        <tr><td>나무 자르는 톱</td><td>50,861</td><td>305,000</td><td>600%</td></tr>
+        <tr><td>무선 전기톱</td><td>90,223</td><td>305,000</td><td>338%</td></tr>
+        <tr><td>전기톱(대표)</td><td>354,237</td><td>457,500</td><td>129%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <h3 class="danger">⑤ 낭비 키워드 TOP 8 <span class="badge">즉시 OFF</span></h3>
+    <table>
+      <thead>
+        <tr><th>키워드</th><th>클릭</th><th>광고비</th><th>매출</th></tr>
+      </thead>
+      <tbody>
+        <tr class="dead"><td>무선 충전톱</td><td>31</td><td>100,780</td><td>0</td></tr>
+        <tr class="dead"><td>무선 전동톱국산</td><td>35</td><td>99,037</td><td>0</td></tr>
+        <tr class="dead"><td>국산 충전식 나무전기톱</td><td>21</td><td>59,327</td><td>0</td></tr>
+        <tr class="dead"><td>충전식 체인톱</td><td>14</td><td>38,971</td><td>0</td></tr>
+        <tr class="dead"><td>가정용 전기톱</td><td>13</td><td>38,260</td><td>0</td></tr>
+        <tr class="dead"><td>충전 전기톱</td><td>10</td><td>31,727</td><td>0</td></tr>
+        <tr class="dead"><td>충전식 소형 전기톱</td><td>6</td><td>26,367</td><td>0</td></tr>
+        <tr class="dead"><td>무선 전기톱 20인치</td><td>8</td><td>23,983</td><td>0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 액션 -->
+<div class="actions">
+  <h3>⑥ 이번 주 우선 액션 3가지</h3>
+  <ol>
+    <li><b>낭비 키워드 TOP 15 즉시 OFF</b> : 월 <b>₩683,000</b> 절감 → 효자 키워드 증액 재원으로 전환</li>
+    <li><b>제설기 캠페인 2개 일시정지</b> : 1월 매출 0원, 시즌 종료. 11월 재가동 캘린더 등록</li>
+    <li><b>'전기톱' 단일 키워드 입찰가 하향 + 엔진톱·전동톱·크래프트볼트 입찰가 30% 증액</b> : ROAS 800%+ 키워드 노출 확대</li>
+  </ol>
+</div>
+
+<footer>
+  <span>출처 : A01217152_pa_daily_keyword_20260101_20260131.xlsx · 행 1,521 · 키워드 727 · 캠페인 4 · 일자 31</span>
+  <span>생성 2026-05-25 · 마케팅 OS Part 2 · 1page version</span>
+</footer>
+
+</body>
+</html>
