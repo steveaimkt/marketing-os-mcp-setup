@@ -48,6 +48,7 @@ description: |
 
 ▶ Discord ↔ Claude 연동 (필수)
   STEP 0  OS 자동 감지
+  STEP 0.5 [Windows 만] 사전 최적화 (Defender·OneDrive·실행정책·LongPath)
   STEP 1  사전 점검 (Bun·Claude Code·claude.ai·Discord 서버·계정 타입)
   STEP 2  Discord Bot 생성
   STEP 3  Message Content Intent 활성화
@@ -92,6 +93,84 @@ uname -s 2>/dev/null || echo "Windows"
 맞나요? (y → 진행 / n → 수동 지정)
 ```
 
+→ **macOS / Linux** 면 STEP 1 로. **Windows** 면 STEP 0.5 (사전 최적화) 진행.
+
+---
+
+## STEP 0.5 · 윈도우 사전 최적화 (Windows 만 · 3분) ⭐
+
+⚠️ **STEP 0 에서 Windows 로 감지된 경우에만 진행. macOS / Linux 는 건너뜁니다.**
+
+윈도우에서 셋업이 5~10배 느려지는 5가지 함정을 먼저 풉니다. 미조치 시 STEP 1 Bun 설치·STEP 5 플러그인 설치·STEP 7 첫 기동에서 누적 30분~수 시간 지연.
+
+### 0.5-1. 5가지 원인 (영향 큰 순)
+
+| # | 원인 | 폭발 지점 | 미조치 시 |
+|---|---|---|---|
+| 1 | OneDrive 가 `%USERPROFILE%\.claude\` 동기화 | STEP 5 플러그인 · STEP 7 첫 기동 | 5~10배 느려짐 + 파일 락 |
+| 2 | Defender 실시간 보호가 Bun 캐시·plugin 폴더 스캔 | STEP 1 Bun · STEP 5 `/plugin install` | 3~5배 + CPU 100% |
+| 3 | PowerShell 실행 정책 Restricted | STEP 1 Bun 설치 스크립트 거부 | 사용자 5~10분 헤맴 |
+| 4 | PATH 미반영 → 같은 창에서 재시도 루프 | STEP 1 직후 `bun --version` 실패 | 무한 재시도 |
+| 5 | claude.ai OAuth 방화벽 첫 프롬프트 | STEP 1-3 `claude login` | 30초~영구 멈춤 |
+
+선택: **한국어 사용자명 (`C:\Users\홍길동\`)** + Long Path 260자 한계로 `npm i -g @anthropic-ai/claude-code` 가 스톨하는 케이스 → 0.5-2 의 `LongPathsEnabled` 로 해결.
+
+### 0.5-2. 일괄 최적화 스크립트 (관리자 PowerShell · 1분)
+
+**Windows 시작 메뉴 → PowerShell 우클릭 → '관리자 권한으로 실행'** 후 :
+
+```powershell
+# (1) Defender 예외 등록 — 가장 큰 효과
+Add-MpPreference -ExclusionPath "$env:USERPROFILE\.bun"
+Add-MpPreference -ExclusionPath "$env:USERPROFILE\.claude"
+Add-MpPreference -ExclusionPath "$env:APPDATA\npm"
+Add-MpPreference -ExclusionProcess "bun.exe"
+Add-MpPreference -ExclusionProcess "node.exe"
+Add-MpPreference -ExclusionProcess "claude.exe"
+
+# (2) PowerShell 실행 정책 (현재 사용자만 · Bun 설치 스크립트용)
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
+
+# (3) Long Path 지원 (관리자 1회 · 한국어 사용자명 대응)
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+  -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+```
+
+3개 모두 성공 메시지 (또는 "already exists") 가 나와야 합니다.
+
+### 0.5-3. OneDrive 백업 해제 (수동 1분)
+
+```
+설정 → 계정 → Windows 백업 → 'OneDrive 폴더 동기화 관리' →
+  '문서' / '바탕 화면' 백업 OFF
+
+(이미 동기화 중이라면)
+  탐색기에서 %USERPROFILE% 입력 →
+  .claude / .bun 폴더가 'C:\Users\<이름>\OneDrive\...' 안에 있는지 확인 →
+  있으면 OneDrive 밖 (예: 'C:\Users\<이름>\.claude') 으로 이동 →
+  OneDrive 아이콘 → 일시 중지 (셋업 동안)
+```
+
+### 0.5-4. STEP 1 진행 전 필수 주의사항
+
+- Bun / Claude Code 설치 후엔 **반드시 새 PowerShell 창** 열기 (PATH 반영)
+- `claude login` 직후 **Windows 방화벽 프롬프트가 뜨면 'Allow' 클릭** (개인 + 공용 네트워크 모두 체크 권장)
+- WSL 의 Bun 과 네이티브 Windows Bun 은 별개. **본 강의는 네이티브 PowerShell 사용**
+
+### STEP 0.5 종료 게이트
+```
+질문 · 윈도우 사전 최적화 완료했나요?
+  - Defender 예외 3개          : ✅ / 건너뜀
+  - 실행 정책 RemoteSigned     : ✅ / 이미 설정
+  - LongPathsEnabled           : ✅ / 이미 설정
+  - OneDrive 백업 해제         : ✅ / 해당 없음
+  - 방화벽 'Allow' 클릭 준비   : ✅
+
+답변 (y / skip / help) :
+```
+
+`skip` → STEP 1 진행하되 셋업 중 멈추면 본 STEP 0.5 로 복귀.
+
 ---
 
 ## STEP 1 · 사전 점검 (자동 + 사용자 확인)
@@ -104,6 +183,45 @@ uname -s 2>/dev/null || echo "Windows"
 | **Windows** | `bun --version` (PowerShell) | `powershell -c "irm bun.sh/install.ps1 \| iex"` |
 
 설치 후 새 터미널 / PowerShell 창 필요.
+
+#### ⚠️ 윈도우 Bun 설치 누락 / 실패 시 (가장 자주 발생)
+
+증상: 설치 명령은 완료된 것 같은데 새 PowerShell 창에서 `bun --version` 이 "명령을 찾을 수 없음" 으로 뜸.
+
+체크 순서 :
+
+```powershell
+# (1) 실제로 설치된 위치 확인
+Test-Path "$env:USERPROFILE\.bun\bin\bun.exe"
+#  True  → 설치 OK, PATH 만 빠진 상태 → (3) 으로
+#  False → 설치 자체 실패 → (2) 재설치
+
+# (2) 강제 재설치 (관리자 PowerShell 권장)
+Remove-Item -Recurse -Force "$env:USERPROFILE\.bun" -ErrorAction SilentlyContinue
+powershell -ExecutionPolicy Bypass -c "irm bun.sh/install.ps1 | iex"
+
+# (3) PATH 수동 추가 (사용자 환경변수 · 영구)
+[Environment]::SetEnvironmentVariable(
+  "Path",
+  [Environment]::GetEnvironmentVariable("Path","User") + ";$env:USERPROFILE\.bun\bin",
+  "User"
+)
+
+# (4) 현재 창에서 즉시 적용
+$env:Path += ";$env:USERPROFILE\.bun\bin"
+bun --version
+```
+
+여전히 실패하면 **수동 설치 (Plan B)** :
+```
+1. https://github.com/oven-sh/bun/releases/latest 접속
+2. 'bun-windows-x64.zip' 다운로드
+3. 압축 해제 후 bun.exe → C:\Users\<이름>\.bun\bin\ 에 복사
+4. 위 (3) PATH 수동 추가 실행
+5. 새 PowerShell 창 → bun --version 확인
+```
+
+⚠️ **WSL 의 Bun 은 사용 금지**. Claude Code 가 네이티브 Windows 에서 실행되면 WSL Bun 을 찾을 수 없음. 반드시 PowerShell 에서 위 절차로 설치.
 
 ### 1-2. Claude Code 버전 (v2.1.80+)
 
@@ -246,6 +364,22 @@ STEP 2 진행할까요? (y / n)
 
 ## STEP 5 · Channels 플러그인 설치 (Claude Code 안에서 1분)
 
+### 5-1. 사전 점검 (특히 윈도우)
+
+플러그인 설치는 Claude Code 가 **내부 서브프로세스로 Bun 을 실행** 하기 때문에 :
+- `bun` 이 Claude 서브프로세스의 PATH 에 보여야 함
+- claude.ai 로그인 상태여야 함
+- 네트워크가 `github.com` 접근 가능해야 함
+
+```
+# Claude Code 내부 셸에서 (또는 Claude 에게 시켜서) 1줄 확인 :
+!bun --version   ← 버전 출력되면 OK
+```
+
+`bun: command not found` 가 뜨면 → STEP 1-1 의 Bun PATH 절차로 복귀.
+
+### 5-2. 설치 실행
+
 현재 세션에서 직접 실행 :
 
 ```
@@ -258,12 +392,47 @@ STEP 2 진행할까요? (y / n)
 
 → `/discord:configure`, `/discord:access` 슬래시 명령 활성화.
 
-게이트 :
+### 5-3. 설치 실패 시 (윈도우에서 가장 자주 발생)
+
+| 증상 | 원인 | 해결 |
+|---|---|---|
+| `marketplace not found` | 마켓 추가 순서 누락 | `/plugin marketplace add` 를 먼저, 그 다음 install |
+| 진행률 멈춤 (3분+) | OneDrive 가 plugin 폴더 동기화 중 | STEP 0.5-3 OneDrive 백업 해제 후 재실행 |
+| `bun: command not found` | Claude 서브프로세스가 Bun 못 찾음 | 5-1 의 `!bun --version` 확인 → 1-1 의 PATH 절차 |
+| `ENOTFOUND github.com` / SSL 오류 | 회사 프록시·SSL 검사 | `git config --global http.sslVerify false` (임시) 또는 사내 네트워크 외 환경 |
+| 무한 "Installing..." 로 멈춤 | Defender 가 plugin 다운로드 파일 스캔 | STEP 0.5-2 Defender 예외 등록 후 재실행 |
+| 설치는 됐는데 슬래시 명령 안 보임 | `/reload-plugins` 누락 | `/reload-plugins` 실행 또는 Claude Code 재시작 |
+| `Authentication required` | claude.ai 로그아웃 상태 | `claude login` 으로 OAuth 재로그인 |
+| 한국어 사용자명에서 풀림 | Long Path 미설정 | STEP 0.5-2 `LongPathsEnabled` |
+
+### 5-4. 강제 재설치 (위 표로 안 풀릴 때 · 1분)
+
+```
+# Claude Code 안에서 :
+/plugin uninstall discord@claude-plugins-official
+/plugin marketplace remove claude-plugins-official
+
+# 외부 셸 (PowerShell) — 캐시 청소 :
+#   macOS / Linux
+rm -rf ~/.claude/plugins/cache
+#   Windows
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\plugins\cache" -ErrorAction SilentlyContinue
+
+# Claude Code 재시작 후 다시 :
+/plugin marketplace add anthropics/claude-plugins-official
+/plugin install discord@claude-plugins-official
+/reload-plugins
+```
+
+### STEP 5 종료 게이트
 ```
 질문 · /plugin install 출력에 "Installed" 같은 성공 메시지 보였나요?
+       그리고 /discord:configure 입력 시 자동완성에 명령이 보이나요?
 
 답변 (y / n / error) :
 ```
+
+`n` 또는 `error` → 5-3 표 확인 → 5-4 강제 재설치 → 그래도 안 되면 트러블슈팅 표 (페이지 하단) 참조.
 
 ---
 
@@ -579,14 +748,38 @@ Claude 가 현재 세션에서 prefix 노출 여부 자동 확인 :
 
 ### STEP 11 종료 게이트
 ```
-🎉 마케팅 MCP 결합 안내 완료.
+🎉 연결 + 확장 완료 (STEP 0~11).
+   Discord ↔ Claude 양방향 + Gmail/Calendar + 마케팅 MCP 결합 가능 상태.
 
-전체 11 STEP 셋업 완료. 폰 DM 으로 자유롭게 호출하세요.
+────────────────────────────────
 
-자주 쓰는 흐름:
-  - 매일 09시 브리핑 → daily-briefing 에이전트
-  - 광고 임계치 자동 점검 → check-ads
-  - 주간 종합 리포트 → weekly-report
+⚠️ 그런데 아직 두 가지가 비어 있음:
+   ① "폰에서 뭐라고 말해야 되나요?" (사용자 매뉴얼)
+   ② "이 시스템이 진짜 한 흐름으로 작동해요?" (아키텍처 진단)
+
+   → 다음 스킬이 인벤토리 1회 스캔으로 두 문서를 동시에 박제합니다.
+
+다음 스킬 (필수 권장):
+  💬 "AI 비서 구축" 또는 "봇 운영 가이드" 라고 말하세요.
+
+  → ai-assistant-build 스킬이 :
+       ① 인벤토리 스캔 (28 에이전트 + 14 스킬 + 10 MCP + 봇 정보)
+       ② 오케스트레이터 카탈로그 검증 (라우팅 갭 검출)
+       ③ 자연어 라우팅 시뮬레이션 (발화 5개 + 확신도)
+       ④ agents/AI-비서-아키텍처.md 박제 (시스템 아키텍처)
+       ⑤ ~/.claude/channels/discord/OPERATIONS.md 박제 (사용자 매뉴얼)
+       ⑥ 폰에서 "운영 가이드 보여줘" → 봇이 운영 카드 응답
+       ⑦ (notion 활성 시) Notion 페이지 2개 미러링
+       ⑧ 첫 E2E 테스트 추천 (A: email-newsletter / B: daily-briefing / C: 광고)
+       소요: 약 15분.
+
+skip 하고 바로 첫 에이전트로 가려면:
+  "1-1 email-newsletter 실습 시작하자" 라고 말하세요.
+
+장기 운영 추가 (옵션):
+  - 매일 09시 자동 브리핑     → Part 10 daily-briefing (Webhook + cron)
+  - 광고 임계치 자동 점검     → Part 10 check-ads
+  - 주간 종합 리포트          → Part 10 weekly-report
 ```
 
 ---
@@ -607,6 +800,20 @@ Claude 가 현재 세션에서 prefix 노출 여부 자동 확인 :
 | 첨부 25MB 초과 | 공식 제한 | 파일 분할 또는 Google Drive 링크 |
 | `claude --version` < 2.1.80 | 구버전 | `npm i -g @anthropic-ai/claude-code@latest` |
 | Connector 추가했는데 도구 prefix 노출 X | 세션 캐시 | Ctrl+C → `claude --channels ...` 재시작 |
+
+### 윈도우 전용 트러블슈팅
+
+| 증상 | 원인 | 해결 |
+|---|---|---|
+| STEP 5 `/plugin install` 3~10분 멈춤 | OneDrive 가 `%USERPROFILE%\.claude` 동기화 | STEP 0.5-3 OneDrive 백업 해제 후 재실행 |
+| STEP 1 Bun 설치 중 CPU 100% · 매우 느림 | Defender 실시간 보호가 Bun 캐시 스캔 | STEP 0.5-2 `Add-MpPreference` 예외 등록 |
+| `irm bun.sh/install.ps1 \| iex` 거부 / 무반응 | PowerShell 실행 정책 Restricted | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
+| Bun 설치했는데 `bun --version` 실패 | PATH 미반영 또는 사용자 PATH 누락 | STEP 1-1 의 PATH 수동 추가 절차 (`[Environment]::SetEnvironmentVariable`) |
+| `bun` 은 되는데 Claude 가 못 찾음 | Claude 서브프로세스 PATH 분리 | Claude Code 완전 재시작 (현재 창 종료 → 새 PowerShell) |
+| `claude login` 영구 멈춤 | Windows 방화벽 첫 프롬프트 미응답 | 방화벽 알림에서 'Allow' (개인 + 공용 체크) 후 재시도 |
+| 한국어 사용자명 + `npm i -g` 스톨 | Long Path 260자 한계 | STEP 0.5-2 `LongPathsEnabled` 등록 후 재시도 |
+| WSL Bun 은 되는데 PowerShell 에선 안 됨 | WSL ↔ Windows PATH 분리 | 네이티브 Windows Bun 별도 설치 (강의 표준) |
+| `/plugin install` 중간에 SSL/proxy 오류 | 사내 SSL 검사 또는 회사 프록시 | 개인 네트워크로 셋업 또는 IT 에 `github.com` · `anthropic.com` 화이트리스트 요청 |
 
 ---
 
