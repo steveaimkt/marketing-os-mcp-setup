@@ -8,8 +8,9 @@ description: |
   ③ STEP 11 · 마케팅 MCP 10종을 Discord 에서 함께 사용 (안내)
 
   자동 호출 트리거:
-  - **"디스코드 채널 설치"** ⭐
+  - **"디스코드 세팅하자"** ⭐
   - **"디스코드 채널 세팅"** ⭐
+  - **"디스코드 채널 설치"** ⭐
   - **"디스코드 channels 설치하자"** ⭐
   - **"폰으로 디스코드에서 클로드 부르기"** ⭐
   - "Discord Channels 셋업" · "discord channels setup"
@@ -49,30 +50,38 @@ description: |
      이 동작하지 않습니다("/plugin isn't available"). 확장에서 시작했다면
      지금 터미널 창을 열어 claude 로 다시 들어온 뒤 진행하세요.
 
-────────────────────────────────
+════════ 🗺 이 스킬 구조 한눈에 ════════
+
+끝나면 이렇게 됩니다:
+  📱 폰 디스코드에서 봇에게 DM 한 줄 → 🖥 PC 의 Claude 가 작업 → 폰으로 회신.
+  (예: 외출 중 "오늘 광고 성과 점검해줘" → 집 PC Claude 가 분석 → 폰 도착)
+
+진행 방식:
+  각 STEP 마다 멈춰서 "됐나요? (y/n)" 확인 후 다음으로. 막히면 'help'.
+  🧑 = 사용자가 직접(디스코드 사이트 클릭)  ·  🤖 = Claude 가 자동(터미널)
 
 총 11 STEP · 약 30~40분.
 
 ▶ Discord ↔ Claude 연동 (필수)
-  STEP 0  OS 자동 감지
-  STEP 0.5 [Windows 만] 사전 최적화 (Defender·OneDrive·실행정책·LongPath)
-  STEP 1  사전 점검 (Bun·Claude Code·claude.ai·Discord 서버·계정 타입)
-  STEP 2  Discord Bot 생성
-  STEP 3  Message Content Intent 활성화
-  STEP 4  봇 서버 초대 (OAuth + 6 권한)
-  STEP 5  Channels 플러그인 설치
-  STEP 6  Bot 토큰 등록
-  STEP 7  --channels 모드 재시작
-  STEP 8  페어링 + allowlist 잠금
-  STEP 9  폰 DM 양방향 검증
+  STEP 0   🤖 OS 자동 감지
+  STEP 0.5 🧑 [Windows 만] 사전 최적화 (Defender·OneDrive·실행정책·LongPath)
+  STEP 1   🤖 사전 점검 (실행환경·Bun·git·Claude Code·로그인·서버·계정)
+  STEP 2   🧑 Discord Bot 생성 + 토큰 복사
+  STEP 3   🧑 Message Content Intent 활성화  ← 가장 자주 빠뜨림
+  STEP 4   🧑 봇 서버 초대 (OAuth + 6 권한)
+  STEP 5   🤖 Channels 플러그인 설치 (공식 /plugin)
+  STEP 6   🤖 Bot 토큰 등록 (/discord:configure)
+  STEP 7   🧑 --channels 모드 재시작        ← 이거 없으면 봇 안 켜짐
+  STEP 8   🧑 페어링 + allowlist 잠금 (보안)
+  STEP 9   🧑 폰 DM 양방향 검증 → 완성 🎉
 
 ▶ 외부 도구 연결 (완성)
-  STEP 10 Gmail + Calendar Connector 연동 (5단계)
+  STEP 10  🧑 Gmail + Calendar Connector 연동 (5단계)
 
 ▶ 마케팅 MCP 결합 안내
-  STEP 11 마케팅 MCP 10종을 Discord 에서 함께 사용
+  STEP 11  🤖 마케팅 MCP 10종을 Discord 에서 함께 사용
 
-각 단계마다 사용자 입력을 기다리며 진행. 막히면 'help' 라고 답하세요.
+이 구조를 먼저 확인하신 뒤 시작합니다. 막히면 언제든 'help'.
 
 시작할까요? (y / n)
 ```
