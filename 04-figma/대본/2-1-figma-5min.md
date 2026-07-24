@@ -178,9 +178,9 @@
 
 ## 참고 자료
 
-- 설치 마라톤 통합: [skills/mcp설치-전체/SKILL.md](../../../../skills/mcp설치-전체/SKILL.md)
+- 설치 마라톤 통합: [skills/mcp설치-전체/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md)
 - 사전 준비물 가이드: [00-사전준비물.md](../../00-사전준비물.md)
-- start 라우터: [skills/start/SKILL.md](../../../../skills/start/SKILL.md)
+- start 라우터: **skills/start/SKILL.md**
 - 클립 단독 설치 스킬: [mcp설치-figma/SKILL.md](../mcp설치-figma/SKILL.md)
 - 자체호스팅 패키지: https://github.com/arinspunk/claude-talk-to-figma-mcp
 - 본 클립 풀 실습 가이드: [실습.md](../실습.md) · 카드뉴스 8장 3단계 흐름

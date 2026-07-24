@@ -104,7 +104,7 @@
 
 ## 참고 자료
 
-- 설치 마라톤 통합: [skills/mcp설치-전체/SKILL.md](../../../../skills/mcp설치-전체/SKILL.md) · **모든 MCP 설치는 여기서 한 번에**
+- 설치 마라톤 통합: [skills/mcp설치-전체/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) · **모든 MCP 설치는 여기서 한 번에**
 - 사전 준비물 가이드: [00-사전준비물.md](../../00-사전준비물.md) · 영상 시청 전 발급할 키 체크리스트
-- start 라우터: [skills/start/SKILL.md](../../../../skills/start/SKILL.md) · 메뉴 → 작동 흐름
+- start 라우터: **skills/start/SKILL.md** · 메뉴 → 작동 흐름
 - 클립 단독 설치 스킬 (참조용): [mcp설치-ads/SKILL.md](../mcp설치-ads/SKILL.md)

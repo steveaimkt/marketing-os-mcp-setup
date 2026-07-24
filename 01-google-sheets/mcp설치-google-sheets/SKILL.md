@@ -646,9 +646,9 @@ Google Sheets 의 매출·광고·재고 3 시트 (지난주 데이터)
 
 ## 강의 연결
 
-- 본 스킬은 [클립 1-2 Google Sheets MCP 대본](../대본/1-2-google-sheets.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준 흐름을 Google Sheets 1 도구에 적용한 클립 전용 버전.
-- 본 스킬로 설치된 MCP 는 [skills/start/SKILL.md](../../../../skills/start/SKILL.md) (라우터: 메뉴 5개 → 선택 시연) 가 이어받아 활용. google-sheets 분기의 5번이 자동 리포트.
+- 본 스킬은 [클립 1-2 Google Sheets MCP 대본](../대본/1-2-google-sheets-5min.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
+- 마스터 스킬 [skills/mcp설치/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) 의 4단계 표준 흐름을 Google Sheets 1 도구에 적용한 클립 전용 버전.
+- 본 스킬로 설치된 MCP 는 **skills/start/SKILL.md** (라우터: 메뉴 5개 → 선택 시연) 가 이어받아 활용. google-sheets 분기의 5번이 자동 리포트.
 - Part 10 의 `weekly-sheets-reporter` 같은 자동화 에이전트가 본 스킬로 설치된 MCP 를 cron 스케줄로 호출.
 - 본 스킬은 클립 폴더 내부에 위치 (`curriculum/part02-MCP12개/01-google-sheets/mcp설치-google-sheets/`) · 클립과 함께 자체 보관.
 

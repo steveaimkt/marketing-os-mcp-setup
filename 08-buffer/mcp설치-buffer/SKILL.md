@@ -467,8 +467,8 @@ D2C 화장품 브랜드 SNS 매니저
 
 ## 강의 연결
 
-- 본 스킬은 [클립 3-1 Buffer MCP 대본](../대본/3-1-buffer.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준 흐름을 Buffer 1 도구에 적용한 클립 전용 버전.
+- 본 스킬은 [클립 3-1 Buffer MCP 대본](../대본/3-1-buffer-5min.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
+- 마스터 스킬 [skills/mcp설치/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) 의 4단계 표준 흐름을 Buffer 1 도구에 적용한 클립 전용 버전.
 - 본 스킬로 설치된 MCP 는 Part 3 의 `content-publisher` 에이전트가 이어받아 활용 (콘텐츠 승인 → 자동 예약).
 - Part 10 의 `weekly-content-publisher` 같은 자동화 에이전트가 본 스킬로 설치된 MCP 를 매주 월요일 cron 으로 호출.
 - 본 스킬은 클립 폴더 내부에 위치 (`curriculum/part02-MCP12개/08-buffer/mcp설치-buffer/`) · 클립과 함께 자체 보관.

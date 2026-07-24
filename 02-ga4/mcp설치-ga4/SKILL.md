@@ -445,8 +445,8 @@ claude mcp list | grep ga4
 
 ## 강의 연결
 
-- 본 스킬은 [클립 1-3 GA4 MCP 대본](../대본/1-3-ga4.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됨
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준을 GA4 의 ADC 패턴에 적용
+- 본 스킬은 [클립 1-3 GA4 MCP 대본](../대본/1-3-ga4-5min.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됨
+- 마스터 스킬 [skills/mcp설치/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) 의 4단계 표준을 GA4 의 ADC 패턴에 적용
 - 본 스킬로 설치된 MCP 는 **Part 7 데이터 분석 에이전트 3종의 기반**:
   - `ga4-html-report` · 매주 월요일 09시 HTML 리포트 자동
   - `ga4-channel-analysis` · 채널별 심층 분석 (4주 추세)

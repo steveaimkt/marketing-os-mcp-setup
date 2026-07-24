@@ -49,11 +49,11 @@ open 2-4-clip-1-1-변환-53초.mp4
 
 ## 참고
 
-본 영상은 [hyperframes/](../../../../hyperframes/) 작업 폴더에서 다음 명령으로 재생성 가능:
+본 영상은 **hyperframes/** 작업 폴더에서 다음 명령으로 재생성 가능:
 ```bash
 cd marketing-os/hyperframes
 npm run check    # lint + validate + inspect
 npm run render   # → renders/{timestamp}.mp4
 ```
 
-원본 렌더 위치: [`hyperframes/renders/`](../../../../hyperframes/renders/) (전체 렌더 이력 보관)
+원본 렌더 위치: **`hyperframes/renders/`** (전체 렌더 이력 보관)

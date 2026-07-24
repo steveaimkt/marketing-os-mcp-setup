@@ -2,7 +2,7 @@
 
 > ⚠️ **노선 변경 안내 (2026-05-26)** · 본 클립은 **Anthropic 공식 Channels Discord 플러그인** (`discord@claude-plugins-official`) 단독 노선으로 전면 전환됨. 기존 서드파티 `mcp-discord` (barryyip0625) 노선은 폐기. 폐기된 스킬은 `_deprecated_` 마커 + 참고용으로만 보존.
 >
-> 새 표준 스킬: [`mcp설치-discord-channels/SKILL.md`](mcp설치-discord-channels/SKILL.md)
+> 새 표준 스킬: [`mcp설치-discord-channels/SKILL.md`](discord-channels-setup/SKILL.md)
 
 ## 한 줄 요약
 
@@ -121,7 +121,7 @@ reply 도구로 폰 DM 답신
 2. **본격 운영 시작** → 데스크톱 PC 24시간 (옵션 2) · 책상 PC 활용
 3. **장기 안정 운영** → Mac mini 홈 서버 (옵션 3) + launchd plist 상시 가동
 
-자세한 실행 명령 + launchd plist 골격은 [`mcp설치-discord-channels/SKILL.md`](mcp설치-discord-channels/SKILL.md) 의 STEP 4.5 참조.
+자세한 실행 명령 + launchd plist 골격은 [`mcp설치-discord-channels/SKILL.md`](discord-channels-setup/SKILL.md) 의 STEP 4.5 참조.
 
 ## 🔧 부가 기능 4가지 (공식 문서에서 추가 발견 · 마케터 가치)
 
@@ -132,17 +132,17 @@ reply 도구로 폰 DM 답신
 | 3 | **access 정책 3가지** | `pairing` / `allowlist` / `groups` | 본인만 (allowlist · 기본) / 팀 + 가족 (groups) / 오픈 (pairing) |
 | 4 | **`--dangerously-skip-permissions`** | 권한 프롬프트 모두 우회 | ⚠️ 신뢰 환경 무인 자동화만. 광고 예산 같은 위험 작업은 권한 릴레이 권장 |
 
-자세한 시나리오는 [`mcp설치-discord-channels/SKILL.md`](mcp설치-discord-channels/SKILL.md) 의 STEP 3.5 참조.
+자세한 시나리오는 [`mcp설치-discord-channels/SKILL.md`](discord-channels-setup/SKILL.md) 의 STEP 3.5 참조.
 
 ## 호출 스킬
 
 | 시점 | 스킬 | 역할 |
 |---|---|---|
 | ⭐ **연결 (1단계)** | [`discord-channels-setup/SKILL.md`](discord-channels-setup/SKILL.md) | 11 STEP · 30~40분. Discord ↔ Claude 양방향 연결 + Gmail/Calendar Connector + 마케팅 MCP 결합 안내. Windows 사전 최적화 (STEP 0.5) 자동 분기 |
-| ⭐ **활성화 (2단계)** | [`ai-assistant-build/SKILL.md`](ai-assistant-build/SKILL.md) | 8 STEP · 약 15분. 인벤토리 1회 스캔 → 운영 매뉴얼 (OPERATIONS.md) + 시스템 아키텍처 (AI-비서-아키텍처.md) 두 문서 동시 박제 + 첫 E2E 테스트 추천. channels-setup STEP 11 종료 후 자동 핸드오프. 이전 두 스킬 (discord-bot-operations-guide + ai-비서-구축) 통합본 |
+| ⭐ **활성화 (2단계)** | [`ai-assistant-build/SKILL.md`](bot-build/SKILL.md) | 8 STEP · 약 15분. 인벤토리 1회 스캔 → 운영 매뉴얼 (OPERATIONS.md) + 시스템 아키텍처 (AI-비서-아키텍처.md) 두 문서 동시 박제 + 첫 E2E 테스트 추천. channels-setup STEP 11 종료 후 자동 핸드오프. 이전 두 스킬 (discord-bot-operations-guide + ai-비서-구축) 통합본 |
 | 운영 | 폰 DM "오늘 일정" 같은 자연어 | Claude 가 `reply`·`fetch_messages` 등 호출 |
-| ⚠️ 폐기 | [`mcp설치-discord/SKILL.md`](mcp설치-discord/SKILL.md) | 구버전 서드파티 `mcp-discord` 노선. 참고용. |
-| ⚠️ 폐기 | [`mcp설치-discord-하이브리드/SKILL.md`](mcp설치-discord-하이브리드/SKILL.md) | 구버전 두 봇 동시 운영. 참고용. |
+| ⚠️ 폐기 | [`mcp설치-discord/SKILL.md`](bot-build/SKILL.md) | 구버전 서드파티 `mcp-discord` 노선. 참고용. |
+| ⚠️ 폐기 | [`mcp설치-discord-하이브리드/SKILL.md`](bot-build/SKILL.md) | 구버전 두 봇 동시 운영. 참고용. |
 
 본 MCP 는 **Part 10 AX 시스템의 양방향 진입점**. Part 8 CRM 의 `cs-responder`·Part 10 의 `daily-briefing`·`orchestrator` 가 본 채널로 통신.
 
@@ -186,7 +186,7 @@ reply 도구로 폰 DM 답신
 | 권한 프롬프트 일시중지 | 도구 권한 대기 | 채널 권한 릴레이로 폰 승인 또는 `--dangerously-skip-permissions` (신뢰 환경) |
 | 첨부 25MB 초과 | 공식 제한 | 분할 또는 Google Drive 링크 |
 
-자세한 트러블슈팅은 [`mcp설치-discord-channels/SKILL.md`](mcp설치-discord-channels/SKILL.md) 참조.
+자세한 트러블슈팅은 [`mcp설치-discord-channels/SKILL.md`](discord-channels-setup/SKILL.md) 참조.
 
 ## 검증된 산출물
 
@@ -198,7 +198,7 @@ reply 도구로 폰 DM 답신
 
 ## 다음
 
-→ [`mcp설치-discord-channels/SKILL.md`](mcp설치-discord-channels/SKILL.md) (⭐ 본 클립 메인 스킬 · 4단계 흐름)
+→ [`mcp설치-discord-channels/SKILL.md`](discord-channels-setup/SKILL.md) (⭐ 본 클립 메인 스킬 · 4단계 흐름)
 → [`channels-setup.md`](channels-setup.md) (Phase 2 셋업 문서 · 신스킬에 흡수됨 · 참고용)
 → [`실습.md`](실습.md) (구버전 실습 · 현행 노선 갱신 예정)
 → Part 10 AX 시스템 (`cs-responder`·`daily-briefing`·`orchestrator`) — 본 채널 기반

@@ -900,7 +900,7 @@ skip 하고 바로 첫 에이전트로 가려면:
 # 📂 강의 연결
 
 - 본 스킬은 [클립 4-2 Discord 대본](../대본/4-2-discord-5min.md) 의 슬라이드 06 "설치 실습" 에서 호출.
-- 마스터 스킬 [`skills/mcp설치`](../../../../skills/mcp설치/) 의 4단계 표준을 Channels + Gmail/Calendar + 10종 MCP 결합으로 확장.
+- 마스터 스킬 **`skills/mcp설치`** 의 4단계 표준을 Channels + Gmail/Calendar + 10종 MCP 결합으로 확장.
 - `~/.claude/skills/discord-channels-setup` 은 본 폴더로의 심볼릭 링크.
 - Part 10 AX 시스템 연결 :
   - `daily-briefing` · 매일 09시 자동 브리핑 (Calendar + Gmail + 광고)

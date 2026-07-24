@@ -9,7 +9,7 @@
 | 슬라이드 파일 | [`4-2-slides/slides-5min.html`](./4-2-slides/slides-5min.html) |
 | 시연 | 없음 (이론 · 실습은 별도 영상) |
 | 핵심 한 줄 | "30개 에이전트의 모든 결과가 디스코드 한 채널로 흘러온다" |
-| 설치 상세 | [mcp설치-discord/SKILL.md](../mcp설치-discord/SKILL.md) |
+| 설치 상세 | [mcp설치-discord/SKILL.md](../bot-build/SKILL.md) |
 
 ## 슬라이드 6장 + 5분 대본
 
@@ -107,7 +107,7 @@
 
 ## 참고 자료
 
-- 설치 마라톤 통합: [skills/mcp설치-전체/SKILL.md](../../../../skills/mcp설치-전체/SKILL.md) · **모든 MCP 설치는 여기서 한 번에**
+- 설치 마라톤 통합: [skills/mcp설치-전체/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) · **모든 MCP 설치는 여기서 한 번에**
 - 사전 준비물 가이드: [00-사전준비물.md](../../00-사전준비물.md) · 영상 시청 전 발급할 키 체크리스트
-- start 라우터: [skills/start/SKILL.md](../../../../skills/start/SKILL.md) · 메뉴 → 작동 흐름
-- 클립 단독 설치 스킬 (참조용): [mcp설치-discord/SKILL.md](../mcp설치-discord/SKILL.md)
+- start 라우터: **skills/start/SKILL.md** · 메뉴 → 작동 흐름
+- 클립 단독 설치 스킬 (참조용): [mcp설치-discord/SKILL.md](../bot-build/SKILL.md)

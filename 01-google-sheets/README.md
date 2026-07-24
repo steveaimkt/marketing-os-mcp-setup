@@ -68,7 +68,7 @@ OAuth 토큰은 `mcp-server/token.json` 에 안전 저장 · 만료 시 자동 �
 | 시점 | 스킬 | 역할 |
 |---|---|---|
 | 설치 단계 | [`/mcp설치-google-sheets`](mcp설치-google-sheets/SKILL.md) | OAuth 5단계 자동 진행 (클립 전용) |
-| 운영 단계 | [`/start`](../../../skills/start/SKILL.md) | 5단계 자동 리포트 (세팅→탐색→분석→기록→공유) |
+| 운영 단계 | **`/start`** | 5단계 자동 리포트 (세팅→탐색→분석→기록→공유) |
 
 ## 트러블슈팅 미리보기
 

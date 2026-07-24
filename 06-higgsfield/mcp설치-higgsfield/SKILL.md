@@ -539,8 +539,8 @@ Claude Code 를 완전 종료 (메뉴 > 종료 또는 ⌘Q) 후 재시작하세�
 
 ## 강의 연결
 
-- 본 스킬은 [클립 2-3 Higgsfield MCP 대본](../대본/2-3-higgsfield.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준 흐름을 Higgsfield 의 HTTP MCP + OAuth 패턴에 적용한 클립 전용 버전.
+- 본 스킬은 [클립 2-3 Higgsfield MCP 대본](../대본/2-3-higgsfield-5min.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
+- 마스터 스킬 [skills/mcp설치/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) 의 4단계 표준 흐름을 Higgsfield 의 HTTP MCP + OAuth 패턴에 적용한 클립 전용 버전.
 - 본 스킬로 설치된 MCP 는 **광고 비주얼·영상 생성의 표준 채널** · Part 5·6 의 비주얼 자동화 에이전트가 호출.
 - 주요 활용 에이전트:
   - Part 5 · `mkt-content-visual` · 콘텐츠 캘린더 → 매주 비주얼 자동 생성

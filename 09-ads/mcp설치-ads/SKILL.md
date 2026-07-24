@@ -622,8 +622,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ## 강의 연결
 
-- 본 스킬은 [클립 3-2 Meta·Google Ads MCP 대본](../대본/3-2-ads.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준 흐름을 2 광고 MCP 에 순차 적용한 클립 전용 버전.
+- 본 스킬은 [클립 3-2 Meta·Google Ads MCP 대본](../대본/3-2-ads-5min.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
+- 마스터 스킬 [skills/mcp설치/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) 의 4단계 표준 흐름을 2 광고 MCP 에 순차 적용한 클립 전용 버전.
 - 본 스킬로 설치된 MCP 는 **Part 6 의 6개 광고 에이전트가 모두 자동 호출**:
   - `mkt-meta-roas` · `mkt-google-ads` · `mkt-anomaly` · `mkt-3media-report` · `mkt-ab-test` · (보조) `mkt-naver-ads`
 - Part 10 의 광고 자동화 에이전트가 매시 cron 으로 임계치 모니터링 + 매주 월요일 통합 리포트.

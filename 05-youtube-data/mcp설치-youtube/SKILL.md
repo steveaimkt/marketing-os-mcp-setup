@@ -516,8 +516,8 @@ claude "유튜브에서 '클로드코드 마케팅' 키워드로 검색한 영�
 
 ## 강의 연결
 
-- 본 스킬은 [클립 2-2 YouTube Data MCP 대본](../대본/2-2-youtube.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준 흐름을 YouTube 의 API Key + Data API v3 패턴에 적용한 클립 전용 버전.
+- 본 스킬은 [클립 2-2 YouTube Data MCP 대본](../대본/2-2-youtube-5min.md) 의 슬라이드 06 "설치 실습" 시연에서 호출됩니다.
+- 마스터 스킬 [skills/mcp설치/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) 의 4단계 표준 흐름을 YouTube 의 API Key + Data API v3 패턴에 적용한 클립 전용 버전.
 - 본 스킬로 설치된 MCP 는 **Part 4·5 콘텐츠 에이전트의 기반**:
   - Part 4 · `trend-scanner` · 키워드 트렌드 매일 자동 추적
   - Part 5 · `youtube-content-analysis` · 주간 영상 성과 자동 리포트

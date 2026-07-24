@@ -482,9 +482,9 @@ D2C 브랜드 콘텐츠 매니저 + 광고 운영 어시스턴트
 
 ## 강의 연결
 
-- 클립 4-1 본편([4-1-notion-5min.md](../대본/4-1-notion-5min.md) · 5분 이론)에서는 본 스킬을 호출하지 않습니다. 슬라이드 06 은 "이론 끝 · 시연 시작" 안내이며, 설치는 Part 2 마지막 **설치 마라톤** 영상([skills/mcp설치-전체/SKILL.md](../../../../skills/mcp설치-전체/SKILL.md) Step 10)에서 일괄 진행됩니다.
+- 클립 4-1 본편([4-1-notion-5min.md](../대본/4-1-notion-5min.md) · 5분 이론)에서는 본 스킬을 호출하지 않습니다. 슬라이드 06 은 "이론 끝 · 시연 시작" 안내이며, 설치는 Part 2 마지막 **설치 마라톤** 영상([skills/mcp설치-전체/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) Step 10)에서 일괄 진행됩니다.
 - 본 스킬의 역할 2가지: ① 설치 마라톤 Step 10 (Notion) 의 상세 절차 ② Notion 만 단독 (재)설치할 때의 참조 스킬.
-- 마스터 스킬 [skills/mcp설치/SKILL.md](../../../../skills/mcp설치/SKILL.md) 의 4단계 표준 흐름을 Notion 의 OAuth 통합 패턴에 적용한 버전.
+- 마스터 스킬 [skills/mcp설치/SKILL.md](../../MCP-통합설치/mcp설치-전체/SKILL.md) 의 4단계 표준 흐름을 Notion 의 OAuth 통합 패턴에 적용한 버전.
 - 본 스킬로 설치된 MCP 는 Part 3 의 `content-publisher` · Part 5 의 `brand-guideline` · Part 6 의 광고 리포트 에이전트 · Part 8 의 `cs-responder` 가 자동 호출.
 - Part 10 의 `weekly-calendar-builder` 같은 자동화 에이전트가 본 스킬로 설치된 MCP 를 매주 cron 으로 호출.
 - 본 스킬은 클립 폴더 내부에 위치 (`curriculum/part02-MCP12개/10-notion/mcp설치-notion/`) · 클립과 함께 자체 보관.
