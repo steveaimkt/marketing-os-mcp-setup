@@ -111,12 +111,18 @@ ls /Applications/Figma.app      # Figma Desktop 설치 확인
 설치 폴더 선택 후 한 줄 실행:
 
 ```bash
-# 원하는 폴더로 이동 (예: marketing-os 옆)
-cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Desktop/0.마케터를\ 위한\ 클로드코드
+# 프로젝트 안의 vendor 폴더에 설치 (경로가 자동으로 정해져 다음 단계가 편함)
+PRJ="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+mkdir -p "$PRJ/vendor" && cd "$PRJ/vendor"
 
 # 한 줄 설치 (git clone + Bun 의존성 + WebSocket 서버 자동 기동)
 npx claude-talk-to-figma-mcp
+
+# 설치 경로 확인 (다음 단계 .mcp.json 에 그대로 붙여넣을 값)
+echo "설치 경로: $PRJ/vendor/claude-talk-to-figma-mcp"
 ```
+
+> ⚠️ **절대경로를 그대로 복붙하지 마세요.** 예전 판본에는 특정 PC 경로(`~/Library/Mobile Documents/...`)가 적혀 있었는데, 그 폴더가 없으면 `cd` 가 조용히 실패하고 **다음 줄이 엉뚱한 위치에서 실행**됩니다. 설치는 된 것처럼 보이는데 경로를 몰라 다음 단계에서 막힙니다.
 
 `npx` 가 자동으로 다음 5가지를 수행 :
 1. GitHub 에서 `arinspunk/claude-talk-to-figma-mcp` 클론

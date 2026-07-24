@@ -21,9 +21,13 @@ description: |
 12개 MCP 를 강의 순서대로 순차 설치. 사용자는 키 발급/클릭만, Claude 가 등록·검증·추적.
 
 ## 핵심 원칙 (작업 전 필독)
-- **검증된 설정 우선**: 본체 `.mcp.json`/`.env` 의 실제 구성을 따른다. 기억·추측 금지.
+- **검증된 설정 우선**: 현재 프로젝트의 `.mcp.json`/`.env` 실제 구성을 따른다. 기억·추측 금지.
 - **비파괴**: 기존 키·인증을 덮어쓰지 않는다. 읽기전용 검증 명령만 실행.
-- **실측 경로**: 본체(라이브)=`…/Desktop/0.마케터를 위한 클로드코드/marketing-os` (.env·.mcp.json·`claude mcp list` 는 여기) · 클론(문서)=`…/MCP 통합 설치/marketing-os-mcp-setup`.
+- **기준 경로**: 모든 경로는 `${CLAUDE_PROJECT_DIR}` (= Claude Code 를 실행한 프로젝트 루트) 기준. `.env`·`.mcp.json`·`claude mcp list` 전부 여기. **절대경로 하드코딩 금지** — 사용자가 클론한 위치는 사람마다 다르다.
+  ```bash
+  echo "$CLAUDE_PROJECT_DIR"          # 비어 있으면 pwd 사용
+  PRJ="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+  ```
 
 ---
 
@@ -62,16 +66,39 @@ description: |
 
 ---
 
-## 사전 점검 (A 모드 · 30초)
+## 사전 점검 (A·B·C 공통 · 30초)
 
 ```bash
-test -f "$PRJ/.mcp.json" || echo "✗ marketing-os 아님"
-node --version | grep -E "v(2[2-9]|[3-9][0-9])\." || echo "⚠ Node 22+ 필요"
+PRJ="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+
+# ⛔ 게이트 0 — Node.js (없으면 npx 기반 MCP 6개가 전부 실패)
+node --version && npm --version || echo "⛔ Node.js 미설치 → 아래 '게이트 0' 처리"
+
+test -f "$PRJ/.mcp.json" || echo "⚠ .mcp.json 없음 → 설치 진행하며 생성"
+node --version | grep -E "v(2[2-9]|[3-9][0-9])\." || echo "⚠ Node 22+ 권장 (Hyperframes)"
 which uv ffmpeg bun || echo "⚠ 누락 도구 설치 필요"
 test -f "$PRJ/.env" || cp "$PRJ/.env.example" "$PRJ/.env"
 claude mcp list 2>&1 | grep -E "Figma|Notion|Higgsfield"   # 커넥터 현황
 ```
 → 완료 스텝 자동 스킵, 미완료만 안내.
+
+### ⛔ 게이트 0 · Node.js (통과해야 Step 1 진행)
+
+`node --version` 이 `command not found` 면 **여기서 멈추고** 설치를 안내한다. 진행해도 Firecrawl·네이버·YouTube·Buffer·GA4·Ads 가 전부 `failed to connect` 로 끝난다.
+
+```
+Node.js 가 필요합니다 (약 3분).
+
+  macOS   → https://nodejs.org → 왼쪽 LTS 버튼 → .pkg 다운로드 → 더블클릭 설치
+  Windows → https://nodejs.org → LTS 버튼 → .msi 다운로드 → 실행
+            (설치 중 "Add to PATH" 체크 확인 · 기본값으로 체크되어 있음)
+
+설치 후 ⚠️ 터미널을 완전히 종료했다가 다시 열어주세요.
+```
+
+⚠️ **Claude Code 가 돌아간다 ≠ Node 설치됨.** 네이티브 설치 스크립트로 Claude Code 를 깔았으면 Node 없이도 작동한다. 커넥터 3종(Figma·Notion·Higgsfield)만 연결되고 나머지가 전부 실패하면 Node 문제로 확정.
+
+상세: [00-Node설치.md](../../00-Node설치.md)
 
 ---
 

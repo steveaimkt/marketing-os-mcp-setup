@@ -62,13 +62,53 @@ description: |
        4.2 결과 표 + Buffer 대시보드 확인
 
 사전 점검 4가지부터:
-  □ Node.js 18 이상
+  □ Node.js 18 이상 ⚠️ 없으면 연결 자체가 안 됨 (STEP 0 에서 자동 확인)
   □ Buffer 무료 계정 (publish.buffer.com)
   □ SNS 채널 1개 이상 (Instagram·Facebook·X·LinkedIn·Threads)
   □ Chrome 또는 Safari (Token 발급용)
 
 전체 진행할까요? (y/n)
 ```
+
+---
+
+## ⚠️ STEP 0: Node.js 확인 (필수 · 30초)
+
+> Buffer MCP 는 `npx @damusix/buffer-mcp` 로 실행됩니다.
+> **Node.js 가 없으면 키를 아무리 정확히 넣어도 연결되지 않습니다.**
+> 실습에서 가장 많이 막히는 지점이라 키 발급보다 **먼저** 확인합니다.
+
+클로드 자동 실행:
+
+```bash
+node --version && npm --version
+```
+
+| 결과 | 조치 |
+|---|---|
+| `v18` 이상 + npm 버전 출력 | ✅ STEP 1 로 진행 |
+| `command not found` | ⛔ 아래 안내 출력 후 설치 완료까지 대기 |
+| `v16` 이하 구버전 | ⛔ 동일 (구버전은 패키지 실행 실패) |
+
+⚠️ **Claude Code 가 돌아간다고 Node 가 깔린 건 아닙니다.** 네이티브 설치 스크립트로 Claude Code 를 깔았다면 Node 없이도 작동하며, 이 경우 npx 기반 MCP 만 전부 실패합니다.
+
+미설치 시 사용자에게 안내:
+
+```
+Node.js 가 필요합니다 (약 3분).
+
+  macOS   → https://nodejs.org → 왼쪽 LTS 버튼 → .pkg 다운로드 → 더블클릭 설치
+  Windows → https://nodejs.org → LTS 버튼 → .msi 다운로드 → 실행
+            (설치 중 "Add to PATH" 체크 확인 · 기본값으로 체크되어 있음)
+
+설치 후 ⚠️ 터미널(또는 PowerShell)을 완전히 종료했다가 다시 열어주세요.
+안 그러면 계속 command not found 가 납니다.
+
+다 되면 "설치했어" 라고 알려주세요.
+```
+
+설치 후 `node --version` 재확인 → **통과해야 STEP 1 진행.**
+자세한 진단·트러블슈팅: [00-Node설치.md](../../00-Node설치.md)
 
 사용자가 OK 하면 STEP 1 로 진행. 거부 시 본 스킬 종료.
 
@@ -410,6 +450,10 @@ D2C 화장품 브랜드 SNS 매니저
 
 | 증상 | 원인 | 해결 |
 |---|---|---|
+| **MCP 가 목록에 안 뜨거나 `failed to connect`** ★ | **Node.js 미설치** (가장 흔함) | `node --version` → not found 면 <https://nodejs.org> LTS 설치 후 터미널 재시작. [00-Node설치.md](../../00-Node설치.md) |
+| `npx: command not found` | 동일 (Node.js 미설치) | 위와 같음 |
+| `Unsupported engine` / `requires Node >=18` | Node 구버전 (v16 이하) | nodejs.org LTS 로 재설치 |
+| `ETIMEDOUT` · `npm ping` 실패 | 사내망·프록시가 npm 저장소 차단 | 개인 네트워크에서 1회 실행해 캐시 생성 또는 IT 프록시 설정 |
 | `401 Unauthorized` | Token 만료·오타·Bearer 형식 오류 | publish.buffer.com > Settings > Apps & Extras > API 에서 재발급 |
 | 채널 목록이 비어 있음 | Buffer 대시보드에 SNS 채널 미연결 | publish.buffer.com 에서 SNS OAuth 연결 후 재시도 |
 | `mcp__buffer__*` 도구 안 보임 | `.mcp.json` 문법 오류 또는 재시작 안 함 | `python3 -c "import json; json.load(open('.mcp.json'))"` 검증 + Claude Code 완전 종료 후 재시작 |

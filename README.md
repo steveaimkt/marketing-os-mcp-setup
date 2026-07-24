@@ -15,6 +15,9 @@ Claude Code에 12개 MCP(Model Context Protocol) 서버를 연결하는 **실습
 ## 빠른 시작 (5분)
 
 ```bash
+# 0) Node.js 확인 ⚠️ 없으면 MCP 절반이 연결 안 됨 (실패 1순위)
+node --version          # v18 이상이면 OK · not found 면 00-Node설치.md 부터
+
 # 1) repo 클론
 git clone https://github.com/steveaimkt/marketing-os-mcp-setup.git
 cd marketing-os-mcp-setup
@@ -22,13 +25,19 @@ cd marketing-os-mcp-setup
 # 2) 환경 변수 템플릿 복사
 cp .env.example .env
 
-# 3) Claude Code 실행
+# 3) 설치 스킬 등록 ← 이걸 해야 /mcp설치-전체 명령이 생깁니다
+bash setup-skills.sh
+
+# 4) Claude Code 실행
 claude
 
-# 4) Claude에게 안내 요청
-# "MCP 전체 설치하자" 라고 입력하면 강의 진행 순서대로 12개 MCP 자동 설치
+# 5) 아래 중 아무거나 입력
+#    /mcp설치-전체          (슬래시 명령)
+#    MCP 전체 설치하자       (그냥 말해도 됨)
 ```
 
+> 📖 스킬 사용법 상세 — [`00-스킬-사용법.md`](00-스킬-사용법.md)
+> ⚠️ MCP 연결이 안 될 때 — [`00-Node설치.md`](00-Node설치.md)
 > 처음이라면 [`00-사전준비물.md`](00-사전준비물.md) 부터 확인하세요.
 
 ## 12개 MCP 한눈에 보기
@@ -51,6 +60,16 @@ claude
 | **Ch 4. 협업과 관리** | | | | |
 | | 4-1 | [Notion](10-notion/) | 콘텐츠 캘린더·기획서 관리 | OAuth (Claude.ai) |
 | | 4-2 | [Discord](11-discord/) | 자동화 알림·승인 AI 봇 | Bot Token |
+| **부록** | | | | |
+| | + | [네이버](12-naver/) | 검색·쇼핑 트렌드(데이터랩) + 광고 ROAS(검색광고) | Client ID / 광고주 키 |
+
+### Node.js 가 필요한 MCP
+
+| Node.js 필요 (npx 실행) | Node.js 불필요 |
+|---|---|
+| Firecrawl · 네이버 데이터랩 · YouTube · Buffer · GA4 · Meta/Google Ads · Google Sheets | Figma · Notion · Higgsfield (브라우저 OAuth 커넥터) · 네이버 검색광고 (python3) |
+
+**커넥터 3종만 되고 나머지가 전부 안 된다면 Node.js 미설치가 원인입니다** → [`00-Node설치.md`](00-Node설치.md)
 
 ## 각 클립 폴더 구성
 

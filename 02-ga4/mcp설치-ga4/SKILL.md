@@ -64,11 +64,51 @@ description: |
 사전 점검 4가지:
   □ Google Analytics 4 속성 1개 (UA 구버전 ✕)
   □ 본인이 그 GA4 속성에 접근 권한 있는 Google 계정
-  □ macOS / Linux / Windows + Node.js 18+
+  □ macOS / Linux / Windows + Node.js 18+ ⚠️ 없으면 연결 자체가 안 됨 (STEP 0 에서 자동 확인)
   □ GA4 속성에 지난 28일 트래픽 데이터 존재
 
 전체 진행할까요? (y/n)
 ```
+
+---
+
+## ⚠️ STEP 0: Node.js 확인 (필수 · 30초)
+
+> GA4 MCP 는 `npx -y mcp-server-ga4` 로 실행됩니다.
+> **Node.js 가 없으면 키를 아무리 정확히 넣어도 연결되지 않습니다.**
+> 실습에서 가장 많이 막히는 지점이라 키 발급보다 **먼저** 확인합니다.
+
+클로드 자동 실행:
+
+```bash
+node --version && npm --version
+```
+
+| 결과 | 조치 |
+|---|---|
+| `v18` 이상 + npm 버전 출력 | ✅ STEP 1 로 진행 |
+| `command not found` | ⛔ 아래 안내 출력 후 설치 완료까지 대기 |
+| `v16` 이하 구버전 | ⛔ 동일 (구버전은 패키지 실행 실패) |
+
+⚠️ **Claude Code 가 돌아간다고 Node 가 깔린 건 아닙니다.** 네이티브 설치 스크립트로 Claude Code 를 깔았다면 Node 없이도 작동하며, 이 경우 npx 기반 MCP 만 전부 실패합니다.
+
+미설치 시 사용자에게 안내:
+
+```
+Node.js 가 필요합니다 (약 3분).
+
+  macOS   → https://nodejs.org → 왼쪽 LTS 버튼 → .pkg 다운로드 → 더블클릭 설치
+  Windows → https://nodejs.org → LTS 버튼 → .msi 다운로드 → 실행
+            (설치 중 "Add to PATH" 체크 확인 · 기본값으로 체크되어 있음)
+
+설치 후 ⚠️ 터미널(또는 PowerShell)을 완전히 종료했다가 다시 열어주세요.
+안 그러면 계속 command not found 가 납니다.
+
+다 되면 "설치했어" 라고 알려주세요.
+```
+
+설치 후 `node --version` 재확인 → **통과해야 STEP 1 진행.**
+자세한 진단·트러블슈팅: [00-Node설치.md](../../00-Node설치.md)
 
 ---
 
@@ -337,6 +377,10 @@ claude mcp list | grep ga4
 
 | 증상 | 원인 | 해결 |
 |---|---|---|
+| **MCP 가 목록에 안 뜨거나 `failed to connect`** ★ | **Node.js 미설치** (가장 흔함) | `node --version` → not found 면 <https://nodejs.org> LTS 설치 후 터미널 재시작. [00-Node설치.md](../../00-Node설치.md) |
+| `npx: command not found` | 동일 (Node.js 미설치) | 위와 같음 |
+| `Unsupported engine` / `requires Node >=18` | Node 구버전 (v16 이하) | nodejs.org LTS 로 재설치 |
+| `ETIMEDOUT` · `npm ping` 실패 | 사내망·프록시가 npm 저장소 차단 | 개인 네트워크에서 1회 실행해 캐시 생성 또는 IT 프록시 설정 |
 | `차단된 앱` (브라우저 OAuth 화면) | Google 기본 client ID 가 Workspace 조직 정책 + `analytics.readonly` 스코프 차단에 걸림 | **자체 OAuth 데스크톱 클라이언트** 발급 후 `--client-id-file=` 로 ADC 재로그인 (아래 ⚠️ 실전 참고) |
 | `invalid_grant / invalid_rapt` (MCP 호출) | ① ADC 스코프 부족(analytics 누락) ② 또는 MCP 서버가 옛 토큰 캐싱 | 스코프 명시해 재로그인 + **Claude Code 재시작** (직접 curl 은 되는데 MCP 만 실패하면 캐싱) |
 | `ACCESS_TOKEN_SCOPE_INSUFFICIENT (403)` | ADC 에 `analytics.readonly` 스코프 없음 | 로그인 시 `--scopes=https://www.googleapis.com/auth/analytics.readonly,...` 명시 |
